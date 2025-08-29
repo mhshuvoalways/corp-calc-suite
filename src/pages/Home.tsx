@@ -28,7 +28,7 @@ const HomePage = () => {
                   <ArrowRight className="w-5 h-5" />
                 </Button>
               </Link>
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-primary">
+              <Button size="lg" variant="outline" className="border-white text-primary hover:bg-white hover:text-primary/70">
                 Learn More
               </Button>
             </div>
