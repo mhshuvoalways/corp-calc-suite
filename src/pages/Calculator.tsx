@@ -1,5 +1,7 @@
 import { Calculator, Euro, MapPin } from 'lucide-react';
 import { useState } from 'react';
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const SpanishPropertyCalculator = () => {
   // State
@@ -61,17 +63,12 @@ const SpanishPropertyCalculator = () => {
   const costs = calculateCosts();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary via-primary/90 to-primary p-4">
-      <div className="max-w-4xl mx-auto">
-        {/* Header */}
+    <div className="min-h-screen bg-gradient-to-br from-primary via-primary/90 to-primary">
+      <Header />
+      
+      <div className="max-w-6xl mx-auto px-4 py-8">
+        {/* Page Header */}
         <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 mb-6 border border-white/20">
-          <div className="flex items-center gap-4 mb-4">
-            <img 
-              src="/logo.png" 
-              alt="Prime Estate Luxury Homes" 
-              className="h-12 w-auto"
-            />
-          </div>
           <h1 className="text-3xl font-bold text-white mb-2">Spanish Property Cost Calculator</h1>
           <div className="flex items-center gap-2 text-secondary">
             <Calculator className="w-5 h-5" />
@@ -256,13 +253,15 @@ const SpanishPropertyCalculator = () => {
           )}
         </div>
 
-        {/* Footer */}
+        {/* Disclaimer */}
         <div className="mt-6 p-4 bg-white/5 backdrop-blur-lg rounded-lg border border-white/10">
           <p className="text-white/60 text-sm text-center">
             This calculator provides estimates only. Actual costs may vary. Please consult with a professional for accurate figures.
           </p>
         </div>
       </div>
+      
+      <Footer />
     </div>
   );
 };
