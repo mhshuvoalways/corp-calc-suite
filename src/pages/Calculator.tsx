@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
 import { Calculator, Euro, MapPin } from 'lucide-react';
+import { useState } from 'react';
 
 const SpanishPropertyCalculator = () => {
   // State
@@ -67,7 +67,7 @@ const SpanishPropertyCalculator = () => {
         <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 mb-6 border border-white/20">
           <div className="flex items-center gap-4 mb-4">
             <img 
-              src="/logo.webp" 
+              src="/logo.png" 
               alt="Prime Estate Luxury Homes" 
               className="h-12 w-auto"
             />

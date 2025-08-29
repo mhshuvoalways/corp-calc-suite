@@ -11,7 +11,7 @@ const HomePage = () => {
           <div className="flex justify-between items-center py-6">
             <div className="flex items-center space-x-4">
               <img 
-                src="/logo.webp" 
+                src="/logo.svg" 
                 alt="Prime Estate Luxury Homes" 
                 className="h-12 w-auto"
               />
@@ -132,7 +132,7 @@ const HomePage = () => {
           <div className="grid md:grid-cols-3 gap-8">
             <div>
               <img 
-                src="/logo.webp" 
+                src="/logo.svg" 
                 alt="Prime Estate Luxury Homes" 
                 className="h-10 w-auto mb-4"
               />
