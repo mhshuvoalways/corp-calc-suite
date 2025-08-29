@@ -61,12 +61,19 @@ const SpanishPropertyCalculator = () => {
   const costs = calculateCosts();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-primary via-primary/90 to-primary p-4">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 mb-6 border border-white/20">
+          <div className="flex items-center gap-4 mb-4">
+            <img 
+              src="/logo.webp" 
+              alt="Prime Estate Luxury Homes" 
+              className="h-12 w-auto"
+            />
+          </div>
           <h1 className="text-3xl font-bold text-white mb-2">Spanish Property Cost Calculator</h1>
-          <div className="flex items-center gap-2 text-amber-400">
+          <div className="flex items-center gap-2 text-secondary">
             <Calculator className="w-5 h-5" />
             <span>Calculate total purchase costs for Spanish properties</span>
           </div>
@@ -82,7 +89,7 @@ const SpanishPropertyCalculator = () => {
                   Property Price (€)
                 </label>
                 <div className="relative">
-                  <Euro className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-amber-400" />
+                  <Euro className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-secondary" />
                   <input
                     type="number"
                     value={propertyPrice}
@@ -103,7 +110,7 @@ const SpanishPropertyCalculator = () => {
                     onClick={() => setPropertyType('newBuild')}
                     className={`py-3 px-4 rounded-lg font-medium transition-all ${
                       propertyType === 'newBuild'
-                        ? 'bg-amber-500 text-slate-900'
+                        ? 'bg-secondary text-secondary-foreground'
                         : 'bg-white/10 text-white hover:bg-white/20'
                     }`}
                   >
@@ -113,7 +120,7 @@ const SpanishPropertyCalculator = () => {
                     onClick={() => setPropertyType('resale')}
                     className={`py-3 px-4 rounded-lg font-medium transition-all ${
                       propertyType === 'resale'
-                        ? 'bg-amber-500 text-slate-900'
+                        ? 'bg-secondary text-secondary-foreground'
                         : 'bg-white/10 text-white hover:bg-white/20'
                     }`}
                   >
@@ -125,7 +132,7 @@ const SpanishPropertyCalculator = () => {
               {/* Region */}
               <div>
                 <label className="text-white text-sm font-medium mb-2 block flex items-center gap-2">
-                  <MapPin className="w-4 h-4 text-amber-400" />
+                  <MapPin className="w-4 h-4 text-secondary" />
                   Region
                 </label>
                 <select
@@ -137,8 +144,8 @@ const SpanishPropertyCalculator = () => {
                   <option value="murcia" className="bg-slate-800">Murcia (Costa Calida)</option>
                   <option value="andalusia" className="bg-slate-800">Andalusia</option>
                 </select>
-                <div className="mt-2 p-2 bg-amber-500/20 rounded-lg">
-                  <p className="text-amber-400 text-sm">
+                <div className="mt-2 p-2 bg-secondary/20 rounded-lg">
+                  <p className="text-secondary text-sm">
                     Tax Rate: {getTaxRate().display}
                   </p>
                 </div>
@@ -154,7 +161,7 @@ const SpanishPropertyCalculator = () => {
                     onClick={() => setIncludeMortgage(true)}
                     className={`py-3 px-4 rounded-lg font-medium transition-all ${
                       includeMortgage
-                        ? 'bg-amber-500 text-slate-900'
+                        ? 'bg-secondary text-secondary-foreground'
                         : 'bg-white/10 text-white hover:bg-white/20'
                     }`}
                   >
@@ -164,7 +171,7 @@ const SpanishPropertyCalculator = () => {
                     onClick={() => setIncludeMortgage(false)}
                     className={`py-3 px-4 rounded-lg font-medium transition-all ${
                       !includeMortgage
-                        ? 'bg-amber-500 text-slate-900'
+                        ? 'bg-secondary text-secondary-foreground'
                         : 'bg-white/10 text-white hover:bg-white/20'
                     }`}
                   >
@@ -191,7 +198,7 @@ const SpanishPropertyCalculator = () => {
                 </div>
 
                 <div className="border-t border-white/20 pt-3">
-                  <h4 className="text-amber-400 font-medium mb-2">Purchase Taxes</h4>
+                  <h4 className="text-secondary font-medium mb-2">Purchase Taxes</h4>
                   <div className="flex justify-between items-center">
                     <span className="text-white/80">{getTaxRate().display}</span>
                     <span className="text-white">€{costs.purchaseTaxes.toLocaleString()}</span>
@@ -199,7 +206,7 @@ const SpanishPropertyCalculator = () => {
                 </div>
 
                 <div className="border-t border-white/20 pt-3">
-                  <h4 className="text-amber-400 font-medium mb-2">Professional Fees</h4>
+                  <h4 className="text-secondary font-medium mb-2">Professional Fees</h4>
                   <div className="space-y-2">
                     <div className="flex justify-between items-center">
                       <span className="text-white/80">Notary Fees</span>
@@ -234,13 +241,13 @@ const SpanishPropertyCalculator = () => {
 
                 <div className="border-t border-white/20 pt-3">
                   <div className="flex justify-between items-center mb-2">
-                    <span className="text-amber-400 font-medium">Total Additional Costs</span>
-                    <span className="text-amber-400 font-bold">€{costs.totalCosts.toLocaleString()}</span>
+                    <span className="text-secondary font-medium">Total Additional Costs</span>
+                    <span className="text-secondary font-bold">€{costs.totalCosts.toLocaleString()}</span>
                   </div>
-                  <div className="p-3 bg-gradient-to-r from-amber-500/20 to-amber-600/20 rounded-lg">
+                  <div className="p-3 bg-gradient-to-r from-secondary/20 to-secondary/30 rounded-lg">
                     <div className="flex justify-between items-center">
                       <span className="text-white font-bold text-lg">Total Purchase Price</span>
-                      <span className="text-amber-400 font-bold text-xl">€{costs.totalPurchase.toLocaleString()}</span>
+                      <span className="text-secondary font-bold text-xl">€{costs.totalPurchase.toLocaleString()}</span>
                     </div>
                   </div>
                 </div>
