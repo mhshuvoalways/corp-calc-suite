@@ -14,7 +14,63 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      calculation_logs: {
+        Row: {
+          admin_fees: number
+          commodities_fees: number
+          created_at: string
+          id: string
+          include_mortgage: boolean
+          legal_fees: number
+          mortgage_fees: number
+          notary_fees: number
+          property_price: number
+          property_type: string
+          purchase_tax: number
+          region: string
+          registry_fees: number
+          tax_rate: number
+          total_cost: number
+          user_id: string | null
+        }
+        Insert: {
+          admin_fees: number
+          commodities_fees: number
+          created_at?: string
+          id?: string
+          include_mortgage?: boolean
+          legal_fees: number
+          mortgage_fees: number
+          notary_fees: number
+          property_price: number
+          property_type: string
+          purchase_tax: number
+          region: string
+          registry_fees: number
+          tax_rate: number
+          total_cost: number
+          user_id?: string | null
+        }
+        Update: {
+          admin_fees?: number
+          commodities_fees?: number
+          created_at?: string
+          id?: string
+          include_mortgage?: boolean
+          legal_fees?: number
+          mortgage_fees?: number
+          notary_fees?: number
+          property_price?: number
+          property_type?: string
+          purchase_tax?: number
+          region?: string
+          registry_fees?: number
+          tax_rate?: number
+          total_cost?: number
+          user_id?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
