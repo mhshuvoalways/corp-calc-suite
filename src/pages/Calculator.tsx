@@ -1,9 +1,17 @@
 import { Calculator, Euro, MapPin } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
+import { useToast } from "@/hooks/use-toast";
 
 const SpanishPropertyCalculator = () => {
+  const { user } = useAuth();
+  const { toast } = useToast();
+  
   // State
   const [propertyPrice, setPropertyPrice] = useState('');
   const [propertyType, setPropertyType] = useState('resale');
@@ -56,11 +64,63 @@ const SpanishPropertyCalculator = () => {
       mortgageFees,
       totalProfessionalFees,
       totalCosts,
-      totalPurchase
+      totalPurchase,
+      taxRate: taxInfo.rate || taxInfo.total
     };
   };
 
+  // Save calculation to database
+  const saveCalculation = async (calculationData) => {
+    try {
+      const { error } = await supabase
+        .from('calculation_logs')
+        .insert({
+          user_id: user?.id || null,
+          property_price: calculationData.price,
+          property_type: propertyType === 'newBuild' ? 'new_build' : 'resale',
+          region: region,
+          include_mortgage: includeMortgage,
+          tax_rate: calculationData.taxRate,
+          purchase_tax: calculationData.purchaseTaxes,
+          notary_fees: calculationData.notaryFees,
+          registry_fees: calculationData.registryFees,
+          legal_fees: calculationData.legalFees,
+          admin_fees: calculationData.adminFees,
+          commodities_fees: calculationData.commoditiesFees,
+          mortgage_fees: calculationData.mortgageFees,
+          total_cost: calculationData.totalCosts
+        });
+
+      if (error) {
+        console.error('Error saving calculation:', error);
+        toast({
+          title: "Error",
+          description: "Failed to save calculation log",
+          variant: "destructive"
+        });
+      } else {
+        toast({
+          title: "Calculation Saved",
+          description: "Your calculation has been logged successfully"
+        });
+      }
+    } catch (error) {
+      console.error('Error saving calculation:', error);
+    }
+  };
+
   const costs = calculateCosts();
+
+  // Auto-save calculation when costs change and are valid
+  useEffect(() => {
+    if (costs && costs.price > 0) {
+      const timeoutId = setTimeout(() => {
+        saveCalculation(costs);
+      }, 1000); // Debounce for 1 second
+
+      return () => clearTimeout(timeoutId);
+    }
+  }, [costs, user]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary via-primary/90 to-primary">
@@ -86,13 +146,13 @@ const SpanishPropertyCalculator = () => {
                   Property Price (€)
                 </label>
                 <div className="relative">
-                  <Euro className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-secondary" />
-                  <input
+                  <Euro className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-secondary z-10" />
+                  <Input
                     type="number"
                     value={propertyPrice}
                     onChange={(e) => setPropertyPrice(e.target.value)}
                     placeholder="250000"
-                    className="w-full pl-10 pr-3 py-3 bg-white/10 border border-white/30 rounded-lg text-white placeholder-white/50 focus:border-amber-400 focus:outline-none"
+                    className="pl-10 bg-white/10 border-white/30 text-white placeholder-white/50 focus:border-secondary"
                   />
                 </div>
               </div>
@@ -132,15 +192,16 @@ const SpanishPropertyCalculator = () => {
                   <MapPin className="w-4 h-4 text-secondary" />
                   Region
                 </label>
-                <select
-                  value={region}
-                  onChange={(e) => setRegion(e.target.value)}
-                  className="w-full py-3 px-4 bg-white/10 border border-white/30 rounded-lg text-white focus:border-amber-400 focus:outline-none"
-                >
-                  <option value="valencia" className="bg-slate-800">Valencia (Costa Blanca)</option>
-                  <option value="murcia" className="bg-slate-800">Murcia (Costa Calida)</option>
-                  <option value="andalusia" className="bg-slate-800">Andalusia</option>
-                </select>
+                <Select value={region} onValueChange={setRegion}>
+                  <SelectTrigger className="bg-white/10 border-white/30 text-white focus:border-secondary">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className="bg-slate-800 border-white/30">
+                    <SelectItem value="valencia" className="text-white hover:bg-white/10">Valencia (Costa Blanca)</SelectItem>
+                    <SelectItem value="murcia" className="text-white hover:bg-white/10">Murcia (Costa Calida)</SelectItem>
+                    <SelectItem value="andalusia" className="text-white hover:bg-white/10">Andalusia</SelectItem>
+                  </SelectContent>
+                </Select>
                 <div className="mt-2 p-2 bg-secondary/20 rounded-lg">
                   <p className="text-secondary text-sm">
                     Tax Rate: {getTaxRate().display}
