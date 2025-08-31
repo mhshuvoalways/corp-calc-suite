@@ -176,6 +176,8 @@ const SpanishPropertyCalculator = () => {
       return;
     }
 
+    setCalculatedCosts(costs);
+
     // Save to database and send email
     const saved = await saveCalculation(costs);
     if (saved) {
@@ -187,9 +189,6 @@ const SpanishPropertyCalculator = () => {
         variant: "destructive",
       });
     }
-
-    // Set the calculated costs to display on the right side
-    setCalculatedCosts(costs);
   };
 
   // Show loading while checking auth
