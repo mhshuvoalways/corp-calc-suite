@@ -163,10 +163,10 @@ const Auth = () => {
             </Link>
           </div>
 
-          <Card className="bg-white/95 backdrop-blur-sm border-white/20">
+          <Card className="bg-primary/10 backdrop-blur-lg border-white/20 shadow-xl">
             <CardHeader className="space-y-1">
-              <CardTitle className="text-2xl text-center">Welcome</CardTitle>
-              <CardDescription className="text-center">
+              <CardTitle className="text-2xl text-center text-white">Welcome</CardTitle>
+              <CardDescription className="text-center text-white/80">
                 Sign in to your account or create a new one
               </CardDescription>
             </CardHeader>
@@ -180,31 +180,31 @@ const Auth = () => {
                 <TabsContent value="login" className="space-y-4">
                   <form onSubmit={handleLogin} className="space-y-4">
                     <div className="space-y-2">
-                      <Label htmlFor="login-email">Email</Label>
+                      <Label htmlFor="login-email" className="text-white">Email</Label>
                       <div className="relative">
-                        <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                        <Mail className="absolute left-3 top-3 h-4 w-4 text-white/70" />
                         <Input
                           id="login-email"
                           type="email"
                           placeholder="Enter your email"
                           value={loginEmail}
                           onChange={(e) => setLoginEmail(e.target.value)}
-                          className="pl-10"
+                          className="pl-10 bg-white/10 border-white/30 text-white placeholder-white/50 focus:border-secondary"
                           required
                         />
                       </div>
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="login-password">Password</Label>
+                      <Label htmlFor="login-password" className="text-white">Password</Label>
                       <div className="relative">
-                        <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                        <Lock className="absolute left-3 top-3 h-4 w-4 text-white/70" />
                         <Input
                           id="login-password"
                           type="password"
                           placeholder="Enter your password"
                           value={loginPassword}
                           onChange={(e) => setLoginPassword(e.target.value)}
-                          className="pl-10"
+                          className="pl-10 bg-white/10 border-white/30 text-white placeholder-white/50 focus:border-secondary"
                           required
                         />
                       </div>
@@ -218,46 +218,46 @@ const Auth = () => {
                 <TabsContent value="signup" className="space-y-4">
                   <form onSubmit={handleSignup} className="space-y-4">
                     <div className="space-y-2">
-                      <Label htmlFor="signup-email">Email</Label>
+                      <Label htmlFor="signup-email" className="text-white">Email</Label>
                       <div className="relative">
-                        <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                        <Mail className="absolute left-3 top-3 h-4 w-4 text-white/70" />
                         <Input
                           id="signup-email"
                           type="email"
                           placeholder="Enter your email"
                           value={signupEmail}
                           onChange={(e) => setSignupEmail(e.target.value)}
-                          className="pl-10"
+                          className="pl-10 bg-white/10 border-white/30 text-white placeholder-white/50 focus:border-secondary"
                           required
                         />
                       </div>
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="signup-password">Password</Label>
+                      <Label htmlFor="signup-password" className="text-white">Password</Label>
                       <div className="relative">
-                        <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                        <Lock className="absolute left-3 top-3 h-4 w-4 text-white/70" />
                         <Input
                           id="signup-password"
                           type="password"
                           placeholder="Create a password"
                           value={signupPassword}
                           onChange={(e) => setSignupPassword(e.target.value)}
-                          className="pl-10"
+                          className="pl-10 bg-white/10 border-white/30 text-white placeholder-white/50 focus:border-secondary"
                           required
                         />
                       </div>
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="confirm-password">Confirm Password</Label>
+                      <Label htmlFor="confirm-password" className="text-white">Confirm Password</Label>
                       <div className="relative">
-                        <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                        <Lock className="absolute left-3 top-3 h-4 w-4 text-white/70" />
                         <Input
                           id="confirm-password"
                           type="password"
                           placeholder="Confirm your password"
                           value={confirmPassword}
                           onChange={(e) => setConfirmPassword(e.target.value)}
-                          className="pl-10"
+                          className="pl-10 bg-white/10 border-white/30 text-white placeholder-white/50 focus:border-secondary"
                           required
                         />
                       </div>
@@ -273,14 +273,14 @@ const Auth = () => {
                       <div className="grid gap-1.5 leading-none">
                         <Label 
                           htmlFor="gdpr-consent"
-                          className="text-sm font-normal leading-snug peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                          className="text-sm font-normal leading-snug peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-white"
                         >
                           I agree to the{' '}
-                          <Link to="/privacy" className="text-primary underline hover:no-underline">
+                          <Link to="/privacy" className="text-secondary underline hover:no-underline">
                             Privacy Policy
                           </Link>{' '}
                           and{' '}
-                          <Link to="/terms" className="text-primary underline hover:no-underline">
+                          <Link to="/terms" className="text-secondary underline hover:no-underline">
                             Terms of Service
                           </Link>
                           . I consent to the processing of my personal data in accordance with GDPR regulations.

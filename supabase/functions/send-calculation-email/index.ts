@@ -54,15 +54,15 @@ const handler = async (req: Request): Promise<Response> => {
         <head>
           <style>
             body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; }
-            .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; text-align: center; }
+            .header { background: linear-gradient(135deg, hsl(210, 53%, 23%) 0%, hsl(35, 41%, 58%) 100%); color: white; padding: 20px; text-align: center; }
             .content { padding: 20px; }
             .section { margin-bottom: 20px; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden; }
-            .section-header { background: #f5f5f5; padding: 15px; font-weight: bold; border-bottom: 1px solid #e0e0e0; }
+            .section-header { background: hsl(210, 53%, 95%); padding: 15px; font-weight: bold; border-bottom: 1px solid #e0e0e0; color: hsl(210, 53%, 23%); }
             .section-content { padding: 15px; }
             .row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #f0f0f0; }
             .row:last-child { border-bottom: none; }
-            .total-row { background: #e8f5e8; font-weight: bold; padding: 12px; }
-            .highlight { background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 15px; text-align: center; font-size: 18px; font-weight: bold; }
+            .total-row { background: hsl(35, 41%, 95%); font-weight: bold; padding: 12px; }
+            .highlight { background: linear-gradient(135deg, hsl(210, 53%, 23%), hsl(35, 41%, 58%)); color: white; padding: 15px; text-align: center; font-size: 18px; font-weight: bold; }
           </style>
         </head>
         <body>
