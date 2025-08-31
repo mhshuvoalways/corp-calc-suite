@@ -1,17 +1,23 @@
-import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { supabase } from '@/integrations/supabase/client';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { useToast } from '@/hooks/use-toast';
-import { ArrowLeft, Mail, Lock, UserIcon } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import type { User } from '@supabase/supabase-js';
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
+import type { User } from "@supabase/supabase-js";
+import { ArrowLeft, Lock, Mail } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -20,28 +26,30 @@ const Auth = () => {
   const [user, setUser] = useState<User | null>(null);
 
   // Login form state
-  const [loginEmail, setLoginEmail] = useState('');
-  const [loginPassword, setLoginPassword] = useState('');
+  const [loginEmail, setLoginEmail] = useState("");
+  const [loginPassword, setLoginPassword] = useState("");
 
   // Signup form state
-  const [signupEmail, setSignupEmail] = useState('');
-  const [signupPassword, setSignupPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [signupEmail, setSignupEmail] = useState("");
+  const [signupPassword, setSignupPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [gdprConsent, setGdprConsent] = useState(false);
 
   useEffect(() => {
     // Check if user is already logged in
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event, session) => {
       setUser(session?.user ?? null);
       if (session?.user) {
-        navigate('/');
+        navigate("/");
       }
     });
 
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
       if (session?.user) {
-        navigate('/');
+        navigate("/");
       }
     });
 
@@ -98,7 +106,8 @@ const Auth = () => {
     if (!gdprConsent) {
       toast({
         title: "GDPR Consent Required",
-        description: "Please accept the privacy policy and terms of service to continue.",
+        description:
+          "Please accept the privacy policy and terms of service to continue.",
         variant: "destructive",
       });
       setLoading(false);
@@ -107,20 +116,21 @@ const Auth = () => {
 
     try {
       const redirectUrl = `${window.location.origin}/`;
-      
+
       const { error } = await supabase.auth.signUp({
         email: signupEmail,
         password: signupPassword,
         options: {
-          emailRedirectTo: redirectUrl
-        }
+          emailRedirectTo: redirectUrl,
+        },
       });
 
       if (error) {
-        if (error.message.includes('already registered')) {
+        if (error.message.includes("already registered")) {
           toast({
             title: "Account Exists",
-            description: "An account with this email already exists. Please try logging in instead.",
+            description:
+              "An account with this email already exists. Please try logging in instead.",
             variant: "destructive",
           });
         } else {
@@ -133,7 +143,8 @@ const Auth = () => {
       } else {
         toast({
           title: "Check Your Email",
-          description: "We've sent you a confirmation link. Please check your email to complete registration.",
+          description:
+            "We've sent you a confirmation link. Please check your email to complete registration.",
         });
       }
     } catch (error) {
@@ -150,12 +161,12 @@ const Auth = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary via-primary/90 to-primary">
       <Header />
-      
+
       <div className="flex items-center justify-center px-4 py-12">
         <div className="w-full max-w-md">
           <div className="mb-6">
-            <Link 
-              to="/" 
+            <Link
+              to="/"
               className="inline-flex items-center gap-2 text-white hover:text-white/80 transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
@@ -165,7 +176,9 @@ const Auth = () => {
 
           <Card className="bg-primary/10 backdrop-blur-lg border-white/20 shadow-xl">
             <CardHeader className="space-y-1">
-              <CardTitle className="text-2xl text-center text-white">Welcome</CardTitle>
+              <CardTitle className="text-2xl text-center text-white">
+                Welcome
+              </CardTitle>
               <CardDescription className="text-center text-white/80">
                 Sign in to your account or create a new one
               </CardDescription>
@@ -176,11 +189,13 @@ const Auth = () => {
                   <TabsTrigger value="login">Login</TabsTrigger>
                   <TabsTrigger value="signup">Sign Up</TabsTrigger>
                 </TabsList>
-                
+
                 <TabsContent value="login" className="space-y-4">
                   <form onSubmit={handleLogin} className="space-y-4">
                     <div className="space-y-2">
-                      <Label htmlFor="login-email" className="text-white">Email</Label>
+                      <Label htmlFor="login-email" className="text-white">
+                        Email
+                      </Label>
                       <div className="relative">
                         <Mail className="absolute left-3 top-3 h-4 w-4 text-white/70" />
                         <Input
@@ -195,7 +210,9 @@ const Auth = () => {
                       </div>
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="login-password" className="text-white">Password</Label>
+                      <Label htmlFor="login-password" className="text-white">
+                        Password
+                      </Label>
                       <div className="relative">
                         <Lock className="absolute left-3 top-3 h-4 w-4 text-white/70" />
                         <Input
@@ -209,16 +226,23 @@ const Auth = () => {
                         />
                       </div>
                     </div>
-                    <Button type="submit" className="w-full" disabled={loading}>
+                    <Button
+                      type="submit"
+                      variant="secondary"
+                      className="w-full"
+                      disabled={loading}
+                    >
                       {loading ? "Signing In..." : "Sign In"}
                     </Button>
                   </form>
                 </TabsContent>
-                
+
                 <TabsContent value="signup" className="space-y-4">
                   <form onSubmit={handleSignup} className="space-y-4">
                     <div className="space-y-2">
-                      <Label htmlFor="signup-email" className="text-white">Email</Label>
+                      <Label htmlFor="signup-email" className="text-white">
+                        Email
+                      </Label>
                       <div className="relative">
                         <Mail className="absolute left-3 top-3 h-4 w-4 text-white/70" />
                         <Input
@@ -233,7 +257,9 @@ const Auth = () => {
                       </div>
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="signup-password" className="text-white">Password</Label>
+                      <Label htmlFor="signup-password" className="text-white">
+                        Password
+                      </Label>
                       <div className="relative">
                         <Lock className="absolute left-3 top-3 h-4 w-4 text-white/70" />
                         <Input
@@ -248,7 +274,9 @@ const Auth = () => {
                       </div>
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="confirm-password" className="text-white">Confirm Password</Label>
+                      <Label htmlFor="confirm-password" className="text-white">
+                        Confirm Password
+                      </Label>
                       <div className="relative">
                         <Lock className="absolute left-3 top-3 h-4 w-4 text-white/70" />
                         <Input
@@ -262,33 +290,47 @@ const Auth = () => {
                         />
                       </div>
                     </div>
-                    
+
                     {/* GDPR Consent */}
                     <div className="flex items-start space-x-2">
-                      <Checkbox 
-                        id="gdpr-consent" 
+                      <Checkbox
+                        id="gdpr-consent"
                         checked={gdprConsent}
-                        onCheckedChange={(checked) => setGdprConsent(checked as boolean)}
+                        onCheckedChange={(checked) =>
+                          setGdprConsent(checked as boolean)
+                        }
                       />
                       <div className="grid gap-1.5 leading-none">
-                        <Label 
+                        <Label
                           htmlFor="gdpr-consent"
                           className="text-sm font-normal leading-snug peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-white"
                         >
-                          I agree to the{' '}
-                          <Link to="/privacy" className="text-secondary underline hover:no-underline">
+                          I agree to the{" "}
+                          <Link
+                            to="/privacy"
+                            className="text-secondary underline hover:no-underline"
+                          >
                             Privacy Policy
-                          </Link>{' '}
-                          and{' '}
-                          <Link to="/terms" className="text-secondary underline hover:no-underline">
+                          </Link>{" "}
+                          and{" "}
+                          <Link
+                            to="/terms"
+                            className="text-secondary underline hover:no-underline"
+                          >
                             Terms of Service
                           </Link>
-                          . I consent to the processing of my personal data in accordance with GDPR regulations.
+                          . I consent to the processing of my personal data in
+                          accordance with GDPR regulations.
                         </Label>
                       </div>
                     </div>
-                    
-                    <Button type="submit" className="w-full" disabled={loading || !gdprConsent}>
+
+                    <Button
+                      type="submit"
+                      variant="secondary"
+                      className="w-full"
+                      disabled={loading || !gdprConsent}
+                    >
                       {loading ? "Creating Account..." : "Create Account"}
                     </Button>
                   </form>
@@ -298,7 +340,7 @@ const Auth = () => {
           </Card>
         </div>
       </div>
-      
+
       <Footer />
     </div>
   );
