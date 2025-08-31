@@ -33,11 +33,10 @@ const SpanishPropertyCalculator = () => {
   const [region, setRegion] = useState("valencia");
   const [includeMortgage, setIncludeMortgage] = useState(false);
   const [calculatedCosts, setCalculatedCosts] = useState(null);
-  const [isCalculating, setIsCalculating] = useState(false);
 
   // Tax rates
-  const getTaxRate = () => {
-    if (propertyType === "newBuild") {
+  const getTaxRate = (currentPropertyType, currentRegion) => {
+    if (currentPropertyType === "newBuild") {
       return {
         iva: 0.1,
         ajd: 0.015,
@@ -50,27 +49,27 @@ const SpanishPropertyCalculator = () => {
         murcia: { rate: 0.08, display: "8% ITP" },
         andalusia: { rate: 0.08, display: "8% ITP" },
       };
-      return itpRates[region];
+      return itpRates[currentRegion];
     }
   };
 
   // Calculate costs
-  const calculateCosts = () => {
-    const price = parseFloat(propertyPrice) || 0;
-    if (price === 0) return null;
+  const calculateCosts = (price, propType, currentRegion, includeMort) => {
+    const numPrice = parseFloat(price) || 0;
+    if (numPrice === 0) return null;
 
-    const taxInfo = getTaxRate();
+    const taxInfo = getTaxRate(propType, currentRegion);
     const purchaseTaxes =
-      propertyType === "newBuild"
-        ? price * taxInfo.total
-        : price * taxInfo.rate;
+      propType === "newBuild"
+        ? numPrice * taxInfo.total
+        : numPrice * taxInfo.rate;
 
-    const notaryFees = Math.max(price * 0.003, 600);
-    const registryFees = Math.max(price * 0.002, 400);
-    const legalFees = price * 0.015;
+    const notaryFees = Math.max(numPrice * 0.003, 600);
+    const registryFees = Math.max(numPrice * 0.002, 400);
+    const legalFees = numPrice * 0.015;
     const adminFees = 500;
-    const commoditiesFees = propertyType === "newBuild" ? 500 : 0;
-    const mortgageFees = includeMortgage ? price * 0.005 : 0;
+    const commoditiesFees = propType === "newBuild" ? 500 : 0;
+    const mortgageFees = includeMort ? numPrice * 0.005 : 0;
 
     const totalProfessionalFees =
       notaryFees +
@@ -80,10 +79,10 @@ const SpanishPropertyCalculator = () => {
       commoditiesFees +
       mortgageFees;
     const totalCosts = purchaseTaxes + totalProfessionalFees;
-    const totalPurchase = price + totalCosts;
+    const totalPurchase = numPrice + totalCosts;
 
     return {
-      price,
+      price: numPrice,
       purchaseTaxes,
       notaryFees,
       registryFees,
@@ -95,6 +94,7 @@ const SpanishPropertyCalculator = () => {
       totalCosts,
       totalPurchase,
       taxRate: taxInfo.rate || taxInfo.total,
+      taxDisplay: taxInfo.display,
     };
   };
 
@@ -117,6 +117,7 @@ const SpanishPropertyCalculator = () => {
         mortgage_fees: calculationData.mortgageFees,
         total_cost: calculationData.totalCosts,
       });
+      return true;
     } catch (error) {
       console.error("Error saving calculation:", error);
       return false;
@@ -160,18 +161,35 @@ const SpanishPropertyCalculator = () => {
 
   // Handle calculate button click
   const handleCalculate = async () => {
-    const costs = calculateCosts();
-    if (!costs) return;
-
-    setIsCalculating(true);
-    setCalculatedCosts(costs);
-    setIsCalculating(false);
+    const costs = calculateCosts(
+      propertyPrice,
+      propertyType,
+      region,
+      includeMortgage
+    );
+    if (!costs) {
+      toast({
+        title: "Invalid Input",
+        description: "Please enter a valid property price",
+        variant: "destructive",
+      });
+      return;
+    }
 
     // Save to database and send email
     const saved = await saveCalculation(costs);
     if (saved) {
       await sendCalculationEmail(costs);
+    } else {
+      toast({
+        title: "Save Error",
+        description: "Failed to save calculation",
+        variant: "destructive",
+      });
     }
+
+    // Set the calculated costs to display on the right side
+    setCalculatedCosts(costs);
   };
 
   // Show loading while checking auth
@@ -320,20 +338,16 @@ const SpanishPropertyCalculator = () => {
               <div className="pt-4">
                 <button
                   onClick={handleCalculate}
-                  disabled={
-                    !propertyPrice ||
-                    parseFloat(propertyPrice) <= 0 ||
-                    isCalculating
-                  }
+                  disabled={!propertyPrice || parseFloat(propertyPrice) <= 0}
                   className="w-full py-3 px-6 bg-secondary text-secondary-foreground font-bold rounded-lg hover:bg-secondary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
                 >
-                  {isCalculating ? "Saving..." : "Calculate & Save"}
+                  Calculate & Save
                 </button>
               </div>
             </div>
           </div>
 
-          {/* Cost Breakdown */}
+          {/* Cost Breakdown - Only shows after calculation */}
           {calculatedCosts && (
             <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
               <h3 className="text-xl font-bold text-white mb-4">
@@ -356,7 +370,7 @@ const SpanishPropertyCalculator = () => {
                   </h4>
                   <div className="flex justify-between items-center">
                     <span className="text-white/80">
-                      {getTaxRate().display}
+                      {calculatedCosts.taxDisplay}
                     </span>
                     <span className="text-white">
                       €{calculatedCosts.purchaseTaxes.toLocaleString()}
@@ -393,7 +407,7 @@ const SpanishPropertyCalculator = () => {
                         €{calculatedCosts.adminFees.toLocaleString()}
                       </span>
                     </div>
-                    {propertyType === "newBuild" && (
+                    {calculatedCosts.commoditiesFees > 0 && (
                       <div className="flex justify-between items-center">
                         <span className="text-white/80">
                           Connecting Commodities
@@ -403,7 +417,7 @@ const SpanishPropertyCalculator = () => {
                         </span>
                       </div>
                     )}
-                    {includeMortgage && (
+                    {calculatedCosts.mortgageFees > 0 && (
                       <div className="flex justify-between items-center">
                         <span className="text-white/80">
                           Mortgage Arrangement Fees
