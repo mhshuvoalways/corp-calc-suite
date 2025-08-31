@@ -17,6 +17,8 @@ const SpanishPropertyCalculator = () => {
   const [propertyType, setPropertyType] = useState('resale');
   const [region, setRegion] = useState('valencia');
   const [includeMortgage, setIncludeMortgage] = useState(false);
+  const [calculatedCosts, setCalculatedCosts] = useState(null);
+  const [isCalculating, setIsCalculating] = useState(false);
 
   // Tax rates
   const getTaxRate = () => {
@@ -109,18 +111,18 @@ const SpanishPropertyCalculator = () => {
     }
   };
 
-  const costs = calculateCosts();
-
-  // Auto-save calculation when costs change and are valid
-  useEffect(() => {
-    if (costs && costs.price > 0) {
-      const timeoutId = setTimeout(() => {
-        saveCalculation(costs);
-      }, 1000); // Debounce for 1 second
-
-      return () => clearTimeout(timeoutId);
-    }
-  }, [costs, user]);
+  // Handle calculate button click
+  const handleCalculate = async () => {
+    const costs = calculateCosts();
+    if (!costs) return;
+    
+    setIsCalculating(true);
+    setCalculatedCosts(costs);
+    
+    // Save to database
+    await saveCalculation(costs);
+    setIsCalculating(false);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary via-primary/90 to-primary">
@@ -237,11 +239,22 @@ const SpanishPropertyCalculator = () => {
                   </button>
                 </div>
               </div>
+
+              {/* Calculate Button */}
+              <div className="pt-4">
+                <button
+                  onClick={handleCalculate}
+                  disabled={!propertyPrice || parseFloat(propertyPrice) <= 0 || isCalculating}
+                  className="w-full py-3 px-6 bg-secondary text-secondary-foreground font-bold rounded-lg hover:bg-secondary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                >
+                  {isCalculating ? 'Calculating...' : 'Calculate & Save'}
+                </button>
+              </div>
             </div>
           </div>
 
           {/* Cost Breakdown */}
-          {costs && (
+          {calculatedCosts && (
             <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
               <h3 className="text-xl font-bold text-white mb-4">
                 Cost Breakdown
@@ -251,7 +264,7 @@ const SpanishPropertyCalculator = () => {
                 <div className="p-3 bg-white/5 rounded-lg">
                   <div className="flex justify-between items-center">
                     <span className="text-white/80">Property Price</span>
-                    <span className="text-white font-bold">€{costs.price.toLocaleString()}</span>
+                    <span className="text-white font-bold">€{calculatedCosts.price.toLocaleString()}</span>
                   </div>
                 </div>
 
@@ -259,7 +272,7 @@ const SpanishPropertyCalculator = () => {
                   <h4 className="text-secondary font-medium mb-2">Purchase Taxes</h4>
                   <div className="flex justify-between items-center">
                     <span className="text-white/80">{getTaxRate().display}</span>
-                    <span className="text-white">€{costs.purchaseTaxes.toLocaleString()}</span>
+                    <span className="text-white">€{calculatedCosts.purchaseTaxes.toLocaleString()}</span>
                   </div>
                 </div>
 
@@ -268,30 +281,30 @@ const SpanishPropertyCalculator = () => {
                   <div className="space-y-2">
                     <div className="flex justify-between items-center">
                       <span className="text-white/80">Notary Fees</span>
-                      <span className="text-white">€{costs.notaryFees.toLocaleString()}</span>
+                      <span className="text-white">€{calculatedCosts.notaryFees.toLocaleString()}</span>
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-white/80">Registry Fees</span>
-                      <span className="text-white">€{costs.registryFees.toLocaleString()}</span>
+                      <span className="text-white">€{calculatedCosts.registryFees.toLocaleString()}</span>
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-white/80">Legal Fees</span>
-                      <span className="text-white">€{costs.legalFees.toLocaleString()}</span>
+                      <span className="text-white">€{calculatedCosts.legalFees.toLocaleString()}</span>
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-white/80">Administrative Fees</span>
-                      <span className="text-white">€{costs.adminFees.toLocaleString()}</span>
+                      <span className="text-white">€{calculatedCosts.adminFees.toLocaleString()}</span>
                     </div>
                     {propertyType === 'newBuild' && (
                       <div className="flex justify-between items-center">
                         <span className="text-white/80">Connecting Commodities</span>
-                        <span className="text-white">€{costs.commoditiesFees.toLocaleString()}</span>
+                        <span className="text-white">€{calculatedCosts.commoditiesFees.toLocaleString()}</span>
                       </div>
                     )}
                     {includeMortgage && (
                       <div className="flex justify-between items-center">
                         <span className="text-white/80">Mortgage Arrangement Fees</span>
-                        <span className="text-white">€{costs.mortgageFees.toLocaleString()}</span>
+                        <span className="text-white">€{calculatedCosts.mortgageFees.toLocaleString()}</span>
                       </div>
                     )}
                   </div>
@@ -300,12 +313,12 @@ const SpanishPropertyCalculator = () => {
                 <div className="border-t border-white/20 pt-3">
                   <div className="flex justify-between items-center mb-2">
                     <span className="text-secondary font-medium">Total Additional Costs</span>
-                    <span className="text-secondary font-bold">€{costs.totalCosts.toLocaleString()}</span>
+                    <span className="text-secondary font-bold">€{calculatedCosts.totalCosts.toLocaleString()}</span>
                   </div>
                   <div className="p-3 bg-gradient-to-r from-secondary/20 to-secondary/30 rounded-lg">
                     <div className="flex justify-between items-center">
                       <span className="text-white font-bold text-lg">Total Purchase Price</span>
-                      <span className="text-secondary font-bold text-xl">€{costs.totalPurchase.toLocaleString()}</span>
+                      <span className="text-secondary font-bold text-xl">€{calculatedCosts.totalPurchase.toLocaleString()}</span>
                     </div>
                   </div>
                 </div>
