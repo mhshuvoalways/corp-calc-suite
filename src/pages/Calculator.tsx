@@ -1,5 +1,6 @@
 import { Calculator, Euro, MapPin } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Input } from "@/components/ui/input";
@@ -9,8 +10,16 @@ import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 
 const SpanishPropertyCalculator = () => {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const { toast } = useToast();
+  const navigate = useNavigate();
+
+  // Redirect to auth if not logged in
+  useEffect(() => {
+    if (!loading && !user) {
+      navigate('/auth');
+    }
+  }, [user, loading, navigate]);
   
   // State
   const [propertyPrice, setPropertyPrice] = useState('');
@@ -124,6 +133,20 @@ const SpanishPropertyCalculator = () => {
     setIsCalculating(false);
   };
 
+  // Show loading while checking auth
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-primary via-primary/90 to-primary flex items-center justify-center">
+        <div className="text-white">Loading...</div>
+      </div>
+    );
+  }
+
+  // Don't render if not authenticated
+  if (!user) {
+    return null;
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary via-primary/90 to-primary">
       <Header />
@@ -204,11 +227,6 @@ const SpanishPropertyCalculator = () => {
                     <SelectItem value="andalusia" className="text-white hover:bg-white/10">Andalusia</SelectItem>
                   </SelectContent>
                 </Select>
-                <div className="mt-2 p-2 bg-secondary/20 rounded-lg">
-                  <p className="text-secondary text-sm">
-                    Tax Rate: {getTaxRate().display}
-                  </p>
-                </div>
               </div>
 
               {/* Mortgage */}
