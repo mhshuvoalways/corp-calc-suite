@@ -109,14 +109,48 @@ const SpanishPropertyCalculator = () => {
           description: "Failed to save calculation log",
           variant: "destructive"
         });
+        return false;
       } else {
         toast({
           title: "Calculation Saved",
-          description: "Your calculation has been logged successfully"
+          description: "Your calculation has been logged and emailed successfully"
         });
+        return true;
       }
     } catch (error) {
       console.error('Error saving calculation:', error);
+      return false;
+    }
+  };
+
+  // Send email with calculation details
+  const sendCalculationEmail = async (calculationData) => {
+    try {
+      const { data, error } = await supabase.functions.invoke('send-calculation-email', {
+        body: {
+          userEmail: user?.email || 'Unknown',
+          userId: user?.id || 'Unknown',
+          calculationData: {
+            ...calculationData,
+            propertyType,
+            region,
+            includeMortgage
+          }
+        }
+      });
+
+      if (error) {
+        console.error('Error sending email:', error);
+        toast({
+          title: "Email Error",
+          description: "Calculation saved but failed to send email notification",
+          variant: "destructive"
+        });
+      } else {
+        console.log('Email sent successfully:', data);
+      }
+    } catch (error) {
+      console.error('Error sending calculation email:', error);
     }
   };
 
@@ -128,8 +162,11 @@ const SpanishPropertyCalculator = () => {
     setIsCalculating(true);
     setCalculatedCosts(costs);
     
-    // Save to database
-    await saveCalculation(costs);
+    // Save to database and send email
+    const saved = await saveCalculation(costs);
+    if (saved) {
+      await sendCalculationEmail(costs);
+    }
     setIsCalculating(false);
   };
 
