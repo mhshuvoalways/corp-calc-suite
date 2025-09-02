@@ -31,9 +31,9 @@ interface CalculationEmailRequest {
 }
 
 const formatCurrency = (amount: number) => {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'EUR'
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "EUR",
   }).format(amount);
 };
 
@@ -44,7 +44,8 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    const { userEmail, userId, calculationData }: CalculationEmailRequest = await req.json();
+    const { userEmail, userId, calculationData }: CalculationEmailRequest =
+      await req.json();
 
     console.log("Sending calculation email for user:", userEmail);
 
@@ -99,15 +100,22 @@ const handler = async (req: Request): Promise<Response> => {
                 </div>
                 <div class="row">
                   <span>Property Type:</span>
-                  <span>${calculationData.propertyType === 'newBuild' ? 'New Build' : 'Resale'}</span>
+                  <span>${
+                    calculationData.propertyType === "newBuild"
+                      ? "New Build"
+                      : "Resale"
+                  }</span>
                 </div>
                 <div class="row">
                   <span>Region:</span>
-                  <span>${calculationData.region.charAt(0).toUpperCase() + calculationData.region.slice(1)}</span>
+                  <span>${
+                    calculationData.region.charAt(0).toUpperCase() +
+                    calculationData.region.slice(1)
+                  }</span>
                 </div>
                 <div class="row">
                   <span>Include Mortgage:</span>
-                  <span>${calculationData.includeMortgage ? 'Yes' : 'No'}</span>
+                  <span>${calculationData.includeMortgage ? "Yes" : "No"}</span>
                 </div>
                 <div class="row">
                   <span>Tax Rate:</span>
@@ -139,18 +147,28 @@ const handler = async (req: Request): Promise<Response> => {
                   <span>Administrative Fees:</span>
                   <span>${formatCurrency(calculationData.adminFees)}</span>
                 </div>
-                ${calculationData.commoditiesFees > 0 ? `
+                ${
+                  calculationData.commoditiesFees > 0
+                    ? `
                 <div class="row">
                   <span>Connecting Commodities:</span>
-                  <span>${formatCurrency(calculationData.commoditiesFees)}</span>
+                  <span>${formatCurrency(
+                    calculationData.commoditiesFees
+                  )}</span>
                 </div>
-                ` : ''}
-                ${calculationData.mortgageFees > 0 ? `
+                `
+                    : ""
+                }
+                ${
+                  calculationData.mortgageFees > 0
+                    ? `
                 <div class="row">
                   <span>Mortgage Arrangement Fees:</span>
                   <span>${formatCurrency(calculationData.mortgageFees)}</span>
                 </div>
-                ` : ''}
+                `
+                    : ""
+                }
               </div>
             </div>
 
@@ -168,14 +186,19 @@ const handler = async (req: Request): Promise<Response> => {
                 <div class="total-row">
                   <div class="row" style="border: none;">
                     <span>Total Purchase Price:</span>
-                    <span>${formatCurrency(calculationData.totalPurchase)}</span>
+                    <span>${formatCurrency(
+                      calculationData.totalPurchase
+                    )}</span>
                   </div>
                 </div>
               </div>
             </div>
 
             <div class="highlight">
-              Additional costs represent ${((calculationData.totalCosts / calculationData.price) * 100).toFixed(1)}% of the property price
+              Additional costs represent ${(
+                (calculationData.totalCosts / calculationData.price) *
+                100
+              ).toFixed(1)}% of the property price
             </div>
 
             <p style="text-align: center; margin-top: 30px; color: #666; font-size: 14px;">
@@ -189,29 +212,31 @@ const handler = async (req: Request): Promise<Response> => {
 
     const emailResponse = await resend.emails.send({
       from: "Property Calculator <onboarding@resend.dev>",
-      to: ["sales@primeestate.es"],
-      subject: `🏡 New Property Calculation - ${formatCurrency(calculationData.price)} (${userEmail})`,
+      to: ["info@primeestate.es"],
+      subject: `🏡 New Property Calculation - ${formatCurrency(
+        calculationData.price
+      )} (${userEmail})`,
       html: emailHtml,
     });
 
     console.log("Email sent successfully:", emailResponse);
 
-    return new Response(JSON.stringify({ success: true, emailId: emailResponse.data?.id }), {
-      status: 200,
-      headers: {
-        "Content-Type": "application/json",
-        ...corsHeaders,
-      },
-    });
-  } catch (error: any) {
-    console.error("Error in send-calculation-email function:", error);
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ success: true, emailId: emailResponse.data?.id }),
       {
-        status: 500,
-        headers: { "Content-Type": "application/json", ...corsHeaders },
+        status: 200,
+        headers: {
+          "Content-Type": "application/json",
+          ...corsHeaders,
+        },
       }
     );
+  } catch (error: any) {
+    console.error("Error in send-calculation-email function:", error);
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+      headers: { "Content-Type": "application/json", ...corsHeaders },
+    });
   }
 };
 
