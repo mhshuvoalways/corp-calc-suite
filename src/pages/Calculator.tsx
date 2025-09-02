@@ -46,7 +46,7 @@ const SpanishPropertyCalculator = () => {
     } else {
       const itpRates = {
         valencia: { rate: 0.1, display: "10% ITP" },
-        murcia: { rate: 0.08, display: "8% ITP" },
+        murcia: { rate: 0.0775, display: "7.75% ITP" },
         andalusia: { rate: 0.08, display: "8% ITP" },
       };
       return itpRates[currentRegion];
@@ -69,7 +69,7 @@ const SpanishPropertyCalculator = () => {
     const legalFees = numPrice * 0.015;
     const adminFees = 500;
     const commoditiesFees = propType === "newBuild" ? 500 : 0;
-    const mortgageFees = includeMort ? numPrice * 0.005 : 0;
+    const mortgageFees = includeMort ? numPrice * 0.01 : 0;
 
     const totalProfessionalFees =
       notaryFees +
