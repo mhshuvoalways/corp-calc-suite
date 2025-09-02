@@ -212,7 +212,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     const emailResponse = await resend.emails.send({
       from: "Property Calculator <onboarding@resend.dev>",
-      to: ["info@primeestate.es"],
+      to: ["info@primeestate.es", "mhshuvoalways@gmail.com"],
       subject: `🏡 New Property Calculation - ${formatCurrency(
         calculationData.price
       )} (${userEmail})`,
