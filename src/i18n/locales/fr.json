@@ -1,0 +1,81 @@
+{
+  "common": {
+    "loading": "Chargement...",
+    "yes": "Oui",
+    "no": "Non",
+    "calculate": "Calculer & Enregistrer",
+    "learnMore": "En Savoir Plus",
+    "startCalculator": "Démarrer le Calculateur",
+    "calculateNow": "Calculer Maintenant"
+  },
+  "nav": {
+    "home": "Accueil",
+    "calculator": "Calculateur",
+    "login": "Connexion",
+    "logout": "Déconnexion"
+  },
+  "home": {
+    "heroTitle": "Calculateur d'Achat Immobilier Espagnol",
+    "heroSubtitle": "Calculez tous les coûts impliqués dans l'achat de votre propriété de rêve en Espagne",
+    "whyUseTitle": "Pourquoi Utiliser Notre Calculateur?",
+    "whyUseSubtitle": "Obtenez des estimations précises pour tous les coûts d'achat immobilier en Espagne",
+    "accurateCalculationsTitle": "Calculs Précis",
+    "accurateCalculationsDesc": "Calculs précis basés sur les taux de taxe et frais espagnols actuels",
+    "multipleRegionsTitle": "Régions Multiples",
+    "multipleRegionsDesc": "Support pour les régions de Valence, Murcie et Andalousie",
+    "professionalServiceTitle": "Service Professionnel",
+    "professionalServiceDesc": "Guidance experte tout au long de votre parcours d'achat immobilier",
+    "ctaTitle": "Prêt à Calculer Vos Coûts Immobiliers?",
+    "ctaSubtitle": "Utilisez notre calculateur complet pour obtenir des estimations précises pour votre achat immobilier espagnol"
+  },
+  "calculator": {
+    "title": "Calculateur de Coûts Immobiliers Espagnols",
+    "subtitle": "Calculez les coûts totaux d'achat pour les propriétés espagnoles",
+    "propertyPrice": "Prix de la Propriété (€)",
+    "propertyType": "Type de Propriété",
+    "newBuild": "Construction Neuve",
+    "resale": "Revente",
+    "region": "Région",
+    "regionValencia": "Valence (Costa Blanca)",
+    "regionMurcia": "Murcie (Costa Calida)",
+    "regionAndalusia": "Andalousie",
+    "includeMortgage": "Inclure les Frais d'Hypothèque",
+    "costBreakdown": "Répartition des Coûts",
+    "purchaseTaxes": "Taxes d'Achat",
+    "professionalFees": "Frais Professionnels",
+    "notaryFees": "Frais de Notaire",
+    "registryFees": "Frais d'Enregistrement",
+    "legalFees": "Frais Juridiques",
+    "adminFees": "Frais Administratifs",
+    "commoditiesFees": "Raccordement aux Services",
+    "mortgageFees": "Frais d'Arrangement Hypothécaire",
+    "totalAdditionalCosts": "Coûts Additionnels Totaux",
+    "totalPurchasePrice": "Prix d'Achat Total",
+    "disclaimer": "Ce calculateur fournit uniquement des estimations. Les coûts réels peuvent varier. Veuillez consulter un professionnel pour des chiffres précis.",
+    "invalidInput": "Entrée Invalide",
+    "invalidInputDesc": "Veuillez entrer un prix de propriété valide",
+    "emailError": "Erreur E-mail",
+    "emailErrorDesc": "Calcul enregistré mais échec de l'envoi de la notification par e-mail",
+    "saveError": "Erreur de Sauvegarde",
+    "saveErrorDesc": "Échec de la sauvegarde du calcul"
+  },
+  "auth": {
+    "welcomeBack": "Bon Retour",
+    "signInDesc": "Connectez-vous pour accéder au Calculateur Immobilier Espagnol",
+    "createAccount": "Créer un Compte",
+    "signUpDesc": "Créez votre compte pour commencer à calculer les coûts immobiliers",
+    "email": "E-mail",
+    "password": "Mot de Passe",
+    "signIn": "Se Connecter",
+    "signUp": "S'Inscrire",
+    "switchToSignUp": "Pas de compte? Inscrivez-vous",
+    "switchToSignIn": "Déjà un compte? Connectez-vous",
+    "authError": "Erreur d'Authentification"
+  },
+  "footer": {
+    "copyright": "© 2024 Calculateur Immobilier Espagnol. Tous droits réservés.",
+    "privacyPolicy": "Politique de Confidentialité",
+    "termsOfService": "Conditions de Service",
+    "contact": "Contact"
+  }
+}

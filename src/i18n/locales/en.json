@@ -1,0 +1,81 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "yes": "Yes",
+    "no": "No",
+    "calculate": "Calculate & Save",
+    "learnMore": "Learn More",
+    "startCalculator": "Start Calculator",
+    "calculateNow": "Calculate Now"
+  },
+  "nav": {
+    "home": "Home",
+    "calculator": "Calculator",
+    "login": "Login",
+    "logout": "Logout"
+  },
+  "home": {
+    "heroTitle": "Spanish Property Purchase Calculator",
+    "heroSubtitle": "Calculate all costs involved in purchasing your dream property in Spain",
+    "whyUseTitle": "Why Use Our Calculator?",
+    "whyUseSubtitle": "Get accurate estimates for all property purchase costs in Spain",
+    "accurateCalculationsTitle": "Accurate Calculations",
+    "accurateCalculationsDesc": "Precise calculations based on current Spanish tax rates and fees",
+    "multipleRegionsTitle": "Multiple Regions",
+    "multipleRegionsDesc": "Support for Valencia, Murcia, and Andalusia regions",
+    "professionalServiceTitle": "Professional Service",
+    "professionalServiceDesc": "Expert guidance throughout your property purchase journey",
+    "ctaTitle": "Ready to Calculate Your Property Costs?",
+    "ctaSubtitle": "Use our comprehensive calculator to get accurate estimates for your Spanish property purchase"
+  },
+  "calculator": {
+    "title": "Spanish Property Cost Calculator",
+    "subtitle": "Calculate total purchase costs for Spanish properties",
+    "propertyPrice": "Property Price (€)",
+    "propertyType": "Property Type",
+    "newBuild": "New Build",
+    "resale": "Resale",
+    "region": "Region",
+    "regionValencia": "Valencia (Costa Blanca)",
+    "regionMurcia": "Murcia (Costa Calida)",
+    "regionAndalusia": "Andalusia",
+    "includeMortgage": "Include Mortgage Fees",
+    "costBreakdown": "Cost Breakdown",
+    "purchaseTaxes": "Purchase Taxes",
+    "professionalFees": "Professional Fees",
+    "notaryFees": "Notary Fees",
+    "registryFees": "Registry Fees",
+    "legalFees": "Legal Fees",
+    "adminFees": "Administrative Fees",
+    "commoditiesFees": "Connecting Commodities",
+    "mortgageFees": "Mortgage Arrangement Fees",
+    "totalAdditionalCosts": "Total Additional Costs",
+    "totalPurchasePrice": "Total Purchase Price",
+    "disclaimer": "This calculator provides estimates only. Actual costs may vary. Please consult with a professional for accurate figures.",
+    "invalidInput": "Invalid Input",
+    "invalidInputDesc": "Please enter a valid property price",
+    "emailError": "Email Error",
+    "emailErrorDesc": "Calculation saved but failed to send email notification",
+    "saveError": "Save Error",
+    "saveErrorDesc": "Failed to save calculation"
+  },
+  "auth": {
+    "welcomeBack": "Welcome Back",
+    "signInDesc": "Sign in to access the Spanish Property Calculator",
+    "createAccount": "Create Account",
+    "signUpDesc": "Create your account to start calculating property costs",
+    "email": "Email",
+    "password": "Password",
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "switchToSignUp": "Don't have an account? Sign up",
+    "switchToSignIn": "Already have an account? Sign in",
+    "authError": "Authentication Error"
+  },
+  "footer": {
+    "copyright": "© 2024 Spanish Property Calculator. All rights reserved.",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "contact": "Contact"
+  }
+}

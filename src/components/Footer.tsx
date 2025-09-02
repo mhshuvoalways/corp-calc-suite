@@ -1,4 +1,7 @@
+import { useTranslation } from 'react-i18next';
+
 const Footer = () => {
+  const { t } = useTranslation();
   return (
     <footer className="bg-white/5 backdrop-blur-md border-t border-white/10 py-12">
       <div className="max-w-6xl mx-auto px-4">
@@ -25,7 +28,7 @@ const Footer = () => {
               </li>
               <li>
                 <a href="#" className="hover:text-secondary transition-colors">
-                  Contact
+                  {t('footer.contact')}
                 </a>
               </li>
             </ul>
@@ -42,7 +45,7 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-white/10 mt-8 pt-8 text-center text-white/50">
-          <p>&copy; 2025 Prime Estate Luxury Homes. All rights reserved.</p>
+          <p>&copy; 2025 Prime Estate Luxury Homes. {t('footer.copyright')}</p>
         </div>
       </div>
     </footer>

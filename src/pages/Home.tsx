@@ -3,8 +3,11 @@ import { Calculator, ArrowRight, Home, Phone, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { useTranslation } from 'react-i18next';
 
 const HomePage = () => {
+  const { t } = useTranslation();
+  
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary via-primary/90 to-primary">
       <Header />
@@ -15,21 +18,21 @@ const HomePage = () => {
         <div className="relative max-w-6xl mx-auto px-4">
           <div className="text-center">
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              Spanish Property Purchase Calculator
+              {t('home.heroTitle')}
             </h1>
             <p className="text-xl md:text-2xl mb-8 text-white/90">
-              Calculate all costs involved in purchasing your dream property in Spain
+              {t('home.heroSubtitle')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/calculator">
                 <Button size="lg" variant="secondary" className="flex items-center gap-2">
                   <Calculator className="w-5 h-5" />
-                  Start Calculator
+                  {t('common.startCalculator')}
                   <ArrowRight className="w-5 h-5" />
                 </Button>
               </Link>
               <Button size="lg" variant="outline" className="border-white text-primary hover:bg-white hover:text-primary/70">
-                Learn More
+                {t('common.learnMore')}
               </Button>
             </div>
           </div>
@@ -41,10 +44,10 @@ const HomePage = () => {
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-white mb-4">
-              Why Use Our Calculator?
+              {t('home.whyUseTitle')}
             </h2>
             <p className="text-lg text-white/70">
-              Get accurate estimates for all property purchase costs in Spain
+              {t('home.whyUseSubtitle')}
             </p>
           </div>
           
@@ -53,9 +56,9 @@ const HomePage = () => {
               <div className="w-16 h-16 bg-secondary rounded-full flex items-center justify-center mx-auto mb-4">
                 <Calculator className="w-8 h-8 text-secondary-foreground" />
               </div>
-              <h3 className="text-xl font-semibold mb-2 text-white">Accurate Calculations</h3>
+              <h3 className="text-xl font-semibold mb-2 text-white">{t('home.accurateCalculationsTitle')}</h3>
               <p className="text-white/70">
-                Precise calculations based on current Spanish tax rates and fees
+                {t('home.accurateCalculationsDesc')}
               </p>
             </div>
             
@@ -63,9 +66,9 @@ const HomePage = () => {
               <div className="w-16 h-16 bg-secondary rounded-full flex items-center justify-center mx-auto mb-4">
                 <Home className="w-8 h-8 text-secondary-foreground" />
               </div>
-              <h3 className="text-xl font-semibold mb-2 text-white">Multiple Regions</h3>
+              <h3 className="text-xl font-semibold mb-2 text-white">{t('home.multipleRegionsTitle')}</h3>
               <p className="text-white/70">
-                Support for Valencia, Murcia, and Andalusia regions
+                {t('home.multipleRegionsDesc')}
               </p>
             </div>
             
@@ -73,9 +76,9 @@ const HomePage = () => {
               <div className="w-16 h-16 bg-secondary rounded-full flex items-center justify-center mx-auto mb-4">
                 <Mail className="w-8 h-8 text-secondary-foreground" />
               </div>
-              <h3 className="text-xl font-semibold mb-2 text-white">Professional Service</h3>
+              <h3 className="text-xl font-semibold mb-2 text-white">{t('home.professionalServiceTitle')}</h3>
               <p className="text-white/70">
-                Expert guidance throughout your property purchase journey
+                {t('home.professionalServiceDesc')}
               </p>
             </div>
           </div>
@@ -86,15 +89,15 @@ const HomePage = () => {
       <section className="py-16 bg-white/5 backdrop-blur-lg">
         <div className="max-w-4xl mx-auto text-center px-4">
           <h2 className="text-3xl font-bold text-white mb-4">
-            Ready to Calculate Your Property Costs?
+            {t('home.ctaTitle')}
           </h2>
           <p className="text-lg text-white/70 mb-8">
-            Use our comprehensive calculator to get accurate estimates for your Spanish property purchase
+            {t('home.ctaSubtitle')}
           </p>
           <Link to="/calculator">
             <Button size="lg" variant="secondary" className="flex items-center gap-2 mx-auto">
               <Calculator className="w-5 h-5" />
-              Calculate Now
+              {t('common.calculateNow')}
               <ArrowRight className="w-5 h-5" />
             </Button>
           </Link>

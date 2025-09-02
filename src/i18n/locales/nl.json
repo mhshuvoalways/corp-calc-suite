@@ -1,0 +1,81 @@
+{
+  "common": {
+    "loading": "Laden...",
+    "yes": "Ja",
+    "no": "Nee",
+    "calculate": "Berekenen & Opslaan",
+    "learnMore": "Meer Informatie",
+    "startCalculator": "Calculator Starten",
+    "calculateNow": "Nu Berekenen"
+  },
+  "nav": {
+    "home": "Home",
+    "calculator": "Calculator",
+    "login": "Inloggen",
+    "logout": "Uitloggen"
+  },
+  "home": {
+    "heroTitle": "Spaanse Vastgoed Aankoop Calculator",
+    "heroSubtitle": "Bereken alle kosten die betrokken zijn bij de aankoop van uw droomhuis in Spanje",
+    "whyUseTitle": "Waarom Onze Calculator Gebruiken?",
+    "whyUseSubtitle": "Krijg nauwkeurige schattingen voor alle vastgoed aankoopkosten in Spanje",
+    "accurateCalculationsTitle": "Nauwkeurige Berekeningen",
+    "accurateCalculationsDesc": "Precieze berekeningen gebaseerd op huidige Spaanse belastingtarieven en kosten",
+    "multipleRegionsTitle": "Meerdere Regio's",
+    "multipleRegionsDesc": "Ondersteuning voor Valencia, Murcia en Andalusië regio's",
+    "professionalServiceTitle": "Professionele Service",
+    "professionalServiceDesc": "Deskundige begeleiding tijdens uw vastgoed aankoop traject",
+    "ctaTitle": "Klaar om Uw Vastgoedkosten te Berekenen?",
+    "ctaSubtitle": "Gebruik onze uitgebreide calculator om nauwkeurige schattingen te krijgen voor uw Spaanse vastgoed aankoop"
+  },
+  "calculator": {
+    "title": "Spaanse Vastgoed Kosten Calculator",
+    "subtitle": "Bereken totale aankoopkosten voor Spaanse eigendommen",
+    "propertyPrice": "Eigendom Prijs (€)",
+    "propertyType": "Eigendom Type",
+    "newBuild": "Nieuwbouw",
+    "resale": "Doorverkoop",
+    "region": "Regio",
+    "regionValencia": "Valencia (Costa Blanca)",
+    "regionMurcia": "Murcia (Costa Calida)",
+    "regionAndalusia": "Andalusië",
+    "includeMortgage": "Hypotheekkosten Opnemen",
+    "costBreakdown": "Kostenverdeling",
+    "purchaseTaxes": "Aankoopbelastingen",
+    "professionalFees": "Professionele Kosten",
+    "notaryFees": "Notariskosten",
+    "registryFees": "Registratiekosten",
+    "legalFees": "Juridische Kosten",
+    "adminFees": "Administratieve Kosten",
+    "commoditiesFees": "Voorzieningen Aansluiten",
+    "mortgageFees": "Hypotheek Arrangementskosten",
+    "totalAdditionalCosts": "Totale Extra Kosten",
+    "totalPurchasePrice": "Totale Aankoopprijs",
+    "disclaimer": "Deze calculator geeft alleen schattingen. Werkelijke kosten kunnen variëren. Raadpleeg een professional voor nauwkeurige cijfers.",
+    "invalidInput": "Ongeldige Invoer",
+    "invalidInputDesc": "Voer een geldige eigendomsprijs in",
+    "emailError": "E-mail Fout",
+    "emailErrorDesc": "Berekening opgeslagen maar e-mailmelding verzenden mislukt",
+    "saveError": "Opslaan Fout",
+    "saveErrorDesc": "Berekening opslaan mislukt"
+  },
+  "auth": {
+    "welcomeBack": "Welkom Terug",
+    "signInDesc": "Log in om toegang te krijgen tot de Spaanse Vastgoed Calculator",
+    "createAccount": "Account Aanmaken",
+    "signUpDesc": "Maak uw account aan om vastgoedkosten te gaan berekenen",
+    "email": "E-mail",
+    "password": "Wachtwoord",
+    "signIn": "Inloggen",
+    "signUp": "Registreren",
+    "switchToSignUp": "Nog geen account? Registreer je",
+    "switchToSignIn": "Heb je al een account? Log in",
+    "authError": "Authenticatie Fout"
+  },
+  "footer": {
+    "copyright": "© 2024 Spaanse Vastgoed Calculator. Alle rechten voorbehouden.",
+    "privacyPolicy": "Privacybeleid",
+    "termsOfService": "Servicevoorwaarden",
+    "contact": "Contact"
+  }
+}

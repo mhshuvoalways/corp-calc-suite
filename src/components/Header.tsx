@@ -4,10 +4,13 @@ import { supabase } from "@/integrations/supabase/client";
 import { LogIn, LogOut } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
+import { useTranslation } from "react-i18next";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 const Header = () => {
   const { user } = useAuth();
   const { toast } = useToast();
+  const { t } = useTranslation();
 
   const handleLogout = async () => {
     const { error } = await supabase.auth.signOut();
@@ -38,9 +41,11 @@ const Header = () => {
           </Link>
 
           <div className="flex items-center gap-4">
+            <LanguageSwitcher />
+            
             <Link to="/calculator">
               <Button variant="secondary" className="hidden md:inline-flex">
-                Get Calculator
+                {t('nav.calculator')}
               </Button>
             </Link>
 
@@ -52,7 +57,7 @@ const Header = () => {
                 className="text-white hover:bg-white/10"
               >
                 <LogOut className="w-4 h-4 mr-2" />
-                Logout
+                {t('nav.logout')}
               </Button>
             ) : (
               <Link to="/auth">
@@ -62,7 +67,7 @@ const Header = () => {
                   className="text-white hover:bg-white/10"
                 >
                   <LogIn className="w-4 h-4 mr-2" />
-                  Login
+                  {t('nav.login')}
                 </Button>
               </Link>
             )}

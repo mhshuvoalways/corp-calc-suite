@@ -14,11 +14,13 @@ import { supabase } from "@/integrations/supabase/client";
 import { Calculator, Euro, MapPin } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const SpanishPropertyCalculator = () => {
   const { user, loading } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   // Redirect to auth if not logged in
   useEffect(() => {
@@ -146,9 +148,8 @@ const SpanishPropertyCalculator = () => {
       if (error) {
         console.error("Error sending email:", error);
         toast({
-          title: "Email Error",
-          description:
-            "Calculation saved but failed to send email notification",
+          title: t('calculator.emailError'),
+          description: t('calculator.emailErrorDesc'),
           variant: "destructive",
         });
       } else {
@@ -169,8 +170,8 @@ const SpanishPropertyCalculator = () => {
     );
     if (!costs) {
       toast({
-        title: "Invalid Input",
-        description: "Please enter a valid property price",
+        title: t('calculator.invalidInput'),
+        description: t('calculator.invalidInputDesc'),
         variant: "destructive",
       });
       return;
@@ -184,8 +185,8 @@ const SpanishPropertyCalculator = () => {
       await sendCalculationEmail(costs);
     } else {
       toast({
-        title: "Save Error",
-        description: "Failed to save calculation",
+        title: t('calculator.saveError'),
+        description: t('calculator.saveErrorDesc'),
         variant: "destructive",
       });
     }
@@ -195,7 +196,7 @@ const SpanishPropertyCalculator = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-primary via-primary/90 to-primary flex items-center justify-center">
-        <div className="text-white">Loading...</div>
+        <div className="text-white">{t('common.loading')}</div>
       </div>
     );
   }
@@ -213,11 +214,11 @@ const SpanishPropertyCalculator = () => {
         {/* Page Header */}
         <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 mb-6 border border-white/20">
           <h1 className="text-3xl font-bold text-white mb-2">
-            Spanish Property Cost Calculator
+            {t('calculator.title')}
           </h1>
           <div className="flex items-center gap-2 text-secondary">
             <Calculator className="w-5 h-5" />
-            <span>Calculate total purchase costs for Spanish properties</span>
+            <span>{t('calculator.subtitle')}</span>
           </div>
         </div>
 
@@ -228,7 +229,7 @@ const SpanishPropertyCalculator = () => {
               {/* Property Price */}
               <div>
                 <label className="text-white text-sm font-medium mb-2 block">
-                  Property Price (€)
+                  {t('calculator.propertyPrice')}
                 </label>
                 <div className="relative">
                   <Euro className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-secondary z-10" />
@@ -245,7 +246,7 @@ const SpanishPropertyCalculator = () => {
               {/* Property Type */}
               <div>
                 <label className="text-white text-sm font-medium mb-2 block">
-                  Property Type
+                  {t('calculator.propertyType')}
                 </label>
                 <div className="grid grid-cols-2 gap-2">
                   <button
@@ -256,7 +257,7 @@ const SpanishPropertyCalculator = () => {
                         : "bg-white/10 text-white hover:bg-white/20"
                     }`}
                   >
-                    New Build
+                    {t('calculator.newBuild')}
                   </button>
                   <button
                     onClick={() => setPropertyType("resale")}
@@ -266,7 +267,7 @@ const SpanishPropertyCalculator = () => {
                         : "bg-white/10 text-white hover:bg-white/20"
                     }`}
                   >
-                    Resale
+                    {t('calculator.resale')}
                   </button>
                 </div>
               </div>
@@ -275,7 +276,7 @@ const SpanishPropertyCalculator = () => {
               <div>
                 <label className="text-white text-sm font-medium mb-2 block flex items-center gap-2">
                   <MapPin className="w-4 h-4 text-secondary" />
-                  Region
+                  {t('calculator.region')}
                 </label>
                 <Select value={region} onValueChange={setRegion}>
                   <SelectTrigger className="bg-white/10 border-white/30 text-white focus:border-secondary">
@@ -286,19 +287,19 @@ const SpanishPropertyCalculator = () => {
                       value="valencia"
                       className="text-white hover:bg-white/10"
                     >
-                      Valencia (Costa Blanca)
+                      {t('calculator.regionValencia')}
                     </SelectItem>
                     <SelectItem
                       value="murcia"
                       className="text-white hover:bg-white/10"
                     >
-                      Murcia (Costa Calida)
+                      {t('calculator.regionMurcia')}
                     </SelectItem>
                     <SelectItem
                       value="andalusia"
                       className="text-white hover:bg-white/10"
                     >
-                      Andalusia
+                      {t('calculator.regionAndalusia')}
                     </SelectItem>
                   </SelectContent>
                 </Select>
@@ -307,7 +308,7 @@ const SpanishPropertyCalculator = () => {
               {/* Mortgage */}
               <div>
                 <label className="text-white text-sm font-medium mb-2 block">
-                  Include Mortgage Fees
+                  {t('calculator.includeMortgage')}
                 </label>
                 <div className="grid grid-cols-2 gap-2">
                   <button
@@ -318,7 +319,7 @@ const SpanishPropertyCalculator = () => {
                         : "bg-white/10 text-white hover:bg-white/20"
                     }`}
                   >
-                    Yes
+                    {t('common.yes')}
                   </button>
                   <button
                     onClick={() => setIncludeMortgage(false)}
@@ -328,7 +329,7 @@ const SpanishPropertyCalculator = () => {
                         : "bg-white/10 text-white hover:bg-white/20"
                     }`}
                   >
-                    No
+                    {t('common.no')}
                   </button>
                 </div>
               </div>
@@ -340,7 +341,7 @@ const SpanishPropertyCalculator = () => {
                   disabled={!propertyPrice || parseFloat(propertyPrice) <= 0}
                   className="w-full py-3 px-6 bg-secondary text-secondary-foreground font-bold rounded-lg hover:bg-secondary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
                 >
-                  Calculate & Save
+                  {t('common.calculate')}
                 </button>
               </div>
             </div>
@@ -350,7 +351,7 @@ const SpanishPropertyCalculator = () => {
           {calculatedCosts && (
             <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
               <h3 className="text-xl font-bold text-white mb-4">
-                Cost Breakdown
+                {t('calculator.costBreakdown')}
               </h3>
 
               <div className="space-y-3">
@@ -365,7 +366,7 @@ const SpanishPropertyCalculator = () => {
 
                 <div className="border-t border-white/20 pt-3">
                   <h4 className="text-secondary font-medium mb-2">
-                    Purchase Taxes
+                    {t('calculator.purchaseTaxes')}
                   </h4>
                   <div className="flex justify-between items-center">
                     <span className="text-white/80">
@@ -379,29 +380,29 @@ const SpanishPropertyCalculator = () => {
 
                 <div className="border-t border-white/20 pt-3">
                   <h4 className="text-secondary font-medium mb-2">
-                    Professional Fees
+                    {t('calculator.professionalFees')}
                   </h4>
                   <div className="space-y-2">
                     <div className="flex justify-between items-center">
-                      <span className="text-white/80">Notary Fees</span>
+                      <span className="text-white/80">{t('calculator.notaryFees')}</span>
                       <span className="text-white">
                         €{calculatedCosts.notaryFees.toLocaleString()}
                       </span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-white/80">Registry Fees</span>
+                      <span className="text-white/80">{t('calculator.registryFees')}</span>
                       <span className="text-white">
                         €{calculatedCosts.registryFees.toLocaleString()}
                       </span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-white/80">Legal Fees</span>
+                      <span className="text-white/80">{t('calculator.legalFees')}</span>
                       <span className="text-white">
                         €{calculatedCosts.legalFees.toLocaleString()}
                       </span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-white/80">Administrative Fees</span>
+                      <span className="text-white/80">{t('calculator.adminFees')}</span>
                       <span className="text-white">
                         €{calculatedCosts.adminFees.toLocaleString()}
                       </span>
@@ -409,7 +410,7 @@ const SpanishPropertyCalculator = () => {
                     {calculatedCosts.commoditiesFees > 0 && (
                       <div className="flex justify-between items-center">
                         <span className="text-white/80">
-                          Connecting Commodities
+                          {t('calculator.commoditiesFees')}
                         </span>
                         <span className="text-white">
                           €{calculatedCosts.commoditiesFees.toLocaleString()}
@@ -419,7 +420,7 @@ const SpanishPropertyCalculator = () => {
                     {calculatedCosts.mortgageFees > 0 && (
                       <div className="flex justify-between items-center">
                         <span className="text-white/80">
-                          Mortgage Arrangement Fees
+                          {t('calculator.mortgageFees')}
                         </span>
                         <span className="text-white">
                           €{calculatedCosts.mortgageFees.toLocaleString()}
@@ -432,7 +433,7 @@ const SpanishPropertyCalculator = () => {
                 <div className="border-t border-white/20 pt-3">
                   <div className="flex justify-between items-center mb-2">
                     <span className="text-secondary font-medium">
-                      Total Additional Costs
+                      {t('calculator.totalAdditionalCosts')}
                     </span>
                     <span className="text-secondary font-bold">
                       €{calculatedCosts.totalCosts.toLocaleString()}
@@ -441,7 +442,7 @@ const SpanishPropertyCalculator = () => {
                   <div className="p-3 bg-gradient-to-r from-secondary/20 to-secondary/30 rounded-lg">
                     <div className="flex justify-between items-center">
                       <span className="text-white font-bold text-lg">
-                        Total Purchase Price
+                        {t('calculator.totalPurchasePrice')}
                       </span>
                       <span className="text-secondary font-bold text-xl">
                         €{calculatedCosts.totalPurchase.toLocaleString()}
@@ -457,8 +458,7 @@ const SpanishPropertyCalculator = () => {
         {/* Disclaimer */}
         <div className="mt-6 p-4 bg-white/5 backdrop-blur-lg rounded-lg border border-white/10">
           <p className="text-white/60 text-sm text-center">
-            This calculator provides estimates only. Actual costs may vary.
-            Please consult with a professional for accurate figures.
+            {t('calculator.disclaimer')}
           </p>
         </div>
       </div>
