@@ -73,7 +73,12 @@
     "authError": "Authenticatie Fout"
   },
   "footer": {
-    "copyright": "© 2024 Spaanse Vastgoed Calculator. Alle rechten voorbehouden.",
+    "companyName": "Prime Estate Luxury Homes",
+    "companyDescription": "Uw vertrouwde partner in Spaanse vastgoedinvesteringen. Deskundige begeleiding voor Costa Blanca en Costa Calida eigendommen.",
+    "quickLinks": "Snelle Links",
+    "aboutUs": "Over Ons",
+    "contactInfo": "Contactgegevens",
+    "copyright": "Alle rechten voorbehouden.",
     "privacyPolicy": "Privacybeleid",
     "termsOfService": "Servicevoorwaarden",
     "contact": "Contact"

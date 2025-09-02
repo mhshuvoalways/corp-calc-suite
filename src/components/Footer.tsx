@@ -9,21 +9,20 @@ const Footer = () => {
           <div>
             <img
               src="/logo.png"
-              alt="Prime Estate Luxury Homes"
+              alt={t('footer.companyName')}
               className="h-14 w-auto mb-4"
             />
             <p className="text-white/70 mb-4">
-              Your trusted partner in Spanish property investment. Expert
-              guidance for Costa Blanca and Costa Calida properties.
+              {t('footer.companyDescription')}
             </p>
           </div>
 
           <div>
-            <h4 className="text-white font-semibold mb-4">Quick Links</h4>
+            <h4 className="text-white font-semibold mb-4">{t('footer.quickLinks')}</h4>
             <ul className="space-y-2 text-white/70">
               <li>
                 <a href="#" className="hover:text-secondary transition-colors">
-                  About Us
+                  {t('footer.aboutUs')}
                 </a>
               </li>
               <li>
@@ -35,7 +34,7 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="text-white font-semibold mb-4">Contact Info</h4>
+            <h4 className="text-white font-semibold mb-4">{t('footer.contactInfo')}</h4>
             <ul className="space-y-2 text-white/70">
               <li>📧 info@primeestate.ai</li>
               <li>📞 +34 691 87 01 15</li>
@@ -45,7 +44,7 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-white/10 mt-8 pt-8 text-center text-white/50">
-          <p>&copy; 2025 Prime Estate Luxury Homes. {t('footer.copyright')}</p>
+          <p>&copy; 2025 {t('footer.companyName')}. {t('footer.copyright')}</p>
         </div>
       </div>
     </footer>

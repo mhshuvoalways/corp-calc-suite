@@ -73,7 +73,12 @@
     "authError": "Authentication Error"
   },
   "footer": {
-    "copyright": "© 2024 Spanish Property Calculator. All rights reserved.",
+    "companyName": "Prime Estate Luxury Homes",
+    "companyDescription": "Your trusted partner in Spanish property investment. Expert guidance for Costa Blanca and Costa Calida properties.",
+    "quickLinks": "Quick Links",
+    "aboutUs": "About Us",
+    "contactInfo": "Contact Info",
+    "copyright": "All rights reserved.",
     "privacyPolicy": "Privacy Policy",
     "termsOfService": "Terms of Service",
     "contact": "Contact"

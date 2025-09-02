@@ -19,13 +19,16 @@ const LanguageSwitcher = () => {
 
   const handleLanguageChange = (languageCode: string) => {
     i18n.changeLanguage(languageCode);
+    try {
+      localStorage.setItem('app_language', languageCode);
+    } catch {}
   };
 
   const currentLanguage = languages.find(lang => lang.code === i18n.language) || languages[0];
 
   return (
     <Select value={i18n.language} onValueChange={handleLanguageChange}>
-      <SelectTrigger className="w-auto min-w-[120px] bg-white/10 border-white/20 text-white focus:border-secondary hover:bg-white/20">
+      <SelectTrigger className="w-auto min-w-[120px] bg-white/10 border-white/20 text-white focus:border-secondary hover:bg-white/20" aria-label="Language selector">
         <div className="flex items-center gap-2">
           <Globe className="w-4 h-4" />
           <span className="hidden sm:inline">{currentLanguage.flag}</span>
@@ -37,7 +40,7 @@ const LanguageSwitcher = () => {
           <SelectItem
             key={language.code}
             value={language.code}
-            className="text-white hover:bg-white/10 focus:bg-white/10 cursor-pointer"
+            className="text-white hover:bg-white/10 cursor-pointer"
           >
             <div className="flex items-center gap-2">
               <span>{language.flag}</span>

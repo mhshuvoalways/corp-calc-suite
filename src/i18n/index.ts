@@ -10,11 +10,13 @@ const resources = {
   fr: { translation: fr },
 };
 
+const savedLng = typeof window !== 'undefined' ? localStorage.getItem('app_language') ?? undefined : undefined;
+
 i18n
   .use(initReactI18next)
   .init({
     resources,
-    lng: 'en', // default language
+    lng: savedLng ?? 'en',
     fallbackLng: 'en',
     interpolation: {
       escapeValue: false, // React already escapes
