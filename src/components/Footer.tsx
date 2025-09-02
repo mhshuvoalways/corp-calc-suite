@@ -5,9 +5,9 @@ const Footer = () => {
         <div className="grid md:grid-cols-3 gap-8">
           <div>
             <img
-              src="/logo.svg"
+              src="/logo.png"
               alt="Prime Estate Luxury Homes"
-              className="h-10 w-auto mb-4"
+              className="h-14 w-auto mb-4"
             />
             <p className="text-white/70 mb-4">
               Your trusted partner in Spanish property investment. Expert

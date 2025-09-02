@@ -28,12 +28,12 @@ const Header = () => {
   return (
     <header className="bg-white/5 backdrop-blur-md border-b border-white/10">
       <div className="max-w-6xl mx-auto px-4">
-        <div className="flex justify-between items-center py-6">
+        <div className="flex justify-between items-center py-4">
           <Link to="/">
             <img
-              src="/logo.svg"
+              src="/logo.png"
               alt="Prime Estate Luxury Homes"
-              className="h-10"
+              className="h-14"
             />
           </Link>
 
