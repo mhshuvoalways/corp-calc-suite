@@ -30,21 +30,21 @@ const Header = () => {
 
   return (
     <header className="bg-white/5 backdrop-blur-md border-b border-white/10">
-      <div className="max-w-6xl mx-auto px-4">
-        <div className="flex justify-between items-center py-4">
-          <Link to="/" className="flex items-center gap-4">
+      <div className="max-w-6xl mx-auto px-3 sm:px-4">
+        <div className="flex justify-between items-center py-3 sm:py-4">
+          <Link to="/" className="flex items-center gap-2 sm:gap-4">
             <img
               src="/logo.png"
               alt="Prime Estate Luxury Homes"
-              className="h-14"
+              className="h-8 sm:h-12 md:h-14"
             />
             <div className="text-white tracking-widest">
-              <h2 className="text-3xl font-semibold">PRIME ESTATE</h2>
-              <p>Luxury Homes</p>
+              <h2 className="text-lg sm:text-2xl md:text-3xl font-semibold leading-tight">PRIME ESTATE</h2>
+              <p className="text-xs sm:text-sm">Luxury Homes</p>
             </div>
           </Link>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-1 sm:gap-2 md:gap-4">
             <LanguageSwitcher />
 
             <Link to="/calculator">
