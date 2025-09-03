@@ -52,7 +52,7 @@ const Footer = () => {
               {t("footer.contactInfo")}
             </h4>
             <ul className="space-y-2 text-white/70">
-              <li>📧 info@primeestate.ai</li>
+              <li>📧 info@primeestate.es</li>
               <li>📞 +34 691 87 01 15</li>
               <li>📍 Costa Blanca, Spain</li>
             </ul>
