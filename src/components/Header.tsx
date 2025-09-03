@@ -38,7 +38,7 @@ const Header = () => {
               alt="Prime Estate Luxury Homes"
               className="h-8 sm:h-12 md:h-14"
             />
-            <div className="text-white tracking-widest">
+            <div className="text-white tracking-widest hidden sm:block">
               <h2 className="text-lg sm:text-2xl md:text-3xl font-semibold leading-tight">PRIME ESTATE</h2>
               <p className="text-xs sm:text-sm">Luxury Homes</p>
             </div>
