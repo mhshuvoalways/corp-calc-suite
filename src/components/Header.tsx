@@ -1,7 +1,8 @@
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
+import { useAdmin } from "@/hooks/useAdmin";
 import { supabase } from "@/integrations/supabase/client";
-import { LogIn, LogOut } from "lucide-react";
+import { LogIn, LogOut, Settings } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import LanguageSwitcher from "./LanguageSwitcher";
@@ -9,6 +10,7 @@ import { Button } from "./ui/button";
 
 const Header = () => {
   const { user } = useAuth();
+  const { isAdmin } = useAdmin();
   const { toast } = useToast();
   const { t } = useTranslation();
 
@@ -52,6 +54,15 @@ const Header = () => {
                 {t("nav.calculator")}
               </Button>
             </Link>
+
+            {isAdmin && (
+              <Link to="/admin">
+                <Button variant="outline" size="sm" className="hidden sm:inline-flex">
+                  <Settings className="w-4 h-4 mr-2" />
+                  Admin
+                </Button>
+              </Link>
+            )}
 
             {user ? (
               <Button
