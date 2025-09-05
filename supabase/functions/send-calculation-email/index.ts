@@ -211,7 +211,7 @@ const handler = async (req: Request): Promise<Response> => {
     `;
 
     const emailResponse = await resend.emails.send({
-      from: "Property Calculator <onboarding@resend.dev>",
+      from: "Property Calculator <noreply@primeestate.ai>",
       to: ["info@primeestate.es"],
       subject: `🏡 New Property Calculation - ${formatCurrency(
         calculationData.price
