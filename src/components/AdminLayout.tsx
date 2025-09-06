@@ -5,12 +5,15 @@ import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { Card, CardContent } from '@/components/ui/card';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { 
   LayoutDashboard, 
   Calculator, 
   Users, 
   LogOut,
-  Loader2
+  Loader2,
+  Menu
 } from 'lucide-react';
 
 const AdminLayout = () => {
@@ -18,6 +21,7 @@ const AdminLayout = () => {
   const { isAdmin, loading } = useAdmin();
   const { toast } = useToast();
   const location = useLocation();
+  const isMobile = useIsMobile();
 
   const handleLogout = async () => {
     try {
@@ -76,75 +80,98 @@ const AdminLayout = () => {
     return location.pathname.startsWith(path);
   };
 
+  const SidebarContent = ({ className = "" }: { className?: string }) => (
+    <div className={`bg-card border-r h-full flex flex-col ${className}`}>
+      <div className="p-6 border-b">
+        <h1 className="text-xl font-bold text-primary">Admin Panel</h1>
+        <p className="text-sm text-muted-foreground mt-1">
+          Prime Estate Calculator
+        </p>
+      </div>
+      
+      <nav className="p-4 space-y-2 flex-1">
+        {navItems.map((item) => {
+          const Icon = item.icon;
+          return (
+            <Link
+              key={item.path}
+              to={item.path}
+              className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${
+                isActive(item.path, item.exact)
+                  ? 'bg-primary text-primary-foreground'
+                  : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+              }`}
+            >
+              <Icon className="h-4 w-4" />
+              {item.label}
+            </Link>
+          );
+        })}
+      </nav>
+
+      <div className="p-4">
+        <Card>
+          <CardContent className="p-4">
+            <div className="text-sm text-muted-foreground mb-2">
+              Logged in as:
+            </div>
+            <div className="text-sm font-medium truncate mb-3">
+              {user.email}
+            </div>
+            <Button 
+              onClick={handleLogout}
+              variant="outline"
+              size="sm"
+              className="w-full"
+            >
+              <LogOut className="h-4 w-4 mr-2" />
+              Logout
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  );
+
   return (
     <div className="min-h-screen bg-background">
       <div className="flex">
-        {/* Sidebar */}
-        <div className="w-64 bg-card border-r min-h-screen">
-          <div className="p-6 border-b">
-            <h1 className="text-xl font-bold text-primary">Admin Panel</h1>
-            <p className="text-sm text-muted-foreground mt-1">
-              Prime Estate Calculator
-            </p>
+        {/* Desktop Sidebar */}
+        {!isMobile && (
+          <div className="w-64 min-h-screen">
+            <SidebarContent />
           </div>
-          
-          <nav className="p-4 space-y-2">
-            {navItems.map((item) => {
-              const Icon = item.icon;
-              return (
-                <Link
-                  key={item.path}
-                  to={item.path}
-                  className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${
-                    isActive(item.path, item.exact)
-                      ? 'bg-primary text-primary-foreground'
-                      : 'text-muted-foreground hover:text-foreground hover:bg-muted'
-                  }`}
-                >
-                  <Icon className="h-4 w-4" />
-                  {item.label}
-                </Link>
-              );
-            })}
-          </nav>
-
-          <div className="absolute bottom-4 left-4 right-4">
-            <Card>
-              <CardContent className="p-4">
-                <div className="text-sm text-muted-foreground mb-2">
-                  Logged in as:
-                </div>
-                <div className="text-sm font-medium truncate mb-3">
-                  {user.email}
-                </div>
-                <Button 
-                  onClick={handleLogout}
-                  variant="outline"
-                  size="sm"
-                  className="w-full"
-                >
-                  <LogOut className="h-4 w-4 mr-2" />
-                  Logout
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
+        )}
 
         {/* Main Content */}
-        <div className="flex-1 flex flex-col">
-          <header className="bg-card border-b px-6 py-4">
+        <div className="flex-1 flex flex-col min-h-screen">
+          <header className="bg-card border-b px-4 py-4 lg:px-6">
             <div className="flex items-center justify-between">
-              <h2 className="text-lg font-semibold">
-                {navItems.find(item => isActive(item.path, item.exact))?.label || 'Admin'}
-              </h2>
-              <div className="text-sm text-muted-foreground">
+              <div className="flex items-center gap-3">
+                {/* Mobile Menu Button */}
+                {isMobile && (
+                  <Sheet>
+                    <SheetTrigger asChild>
+                      <Button variant="ghost" size="sm">
+                        <Menu className="h-5 w-5" />
+                      </Button>
+                    </SheetTrigger>
+                    <SheetContent side="left" className="p-0 w-64">
+                      <SidebarContent />
+                    </SheetContent>
+                  </Sheet>
+                )}
+                <h2 className="text-lg font-semibold">
+                  {navItems.find(item => isActive(item.path, item.exact))?.label || 'Admin'}
+                </h2>
+              </div>
+              <div className="text-sm text-muted-foreground hidden sm:block">
                 Welcome back, Admin
               </div>
             </div>
           </header>
           
-          <main className="flex-1 p-6">
+          <main className="flex-1 p-4 lg:p-6 overflow-auto">
             <Outlet />
           </main>
         </div>

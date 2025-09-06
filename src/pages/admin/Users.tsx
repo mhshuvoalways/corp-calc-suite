@@ -124,14 +124,14 @@ const Users = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">Users</h1>
           <p className="text-muted-foreground">
             Manage all registered users
           </p>
         </div>
-        <Button onClick={exportToCSV} disabled={exporting || users.length === 0}>
+        <Button onClick={exportToCSV} disabled={exporting || users.length === 0} className="w-full sm:w-auto">
           <Download className="h-4 w-4 mr-2" />
           {exporting ? 'Exporting...' : 'Export Users'}
         </Button>
