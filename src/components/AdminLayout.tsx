@@ -81,15 +81,15 @@ const AdminLayout = () => {
   };
 
   const SidebarContent = ({ className = "" }: { className?: string }) => (
-    <div className={`bg-card border-r h-full flex flex-col ${className}`}>
-      <div className="p-6 border-b">
+    <div className={`bg-card border-r h-screen flex flex-col ${className}`}>
+      <div className="p-6 border-b flex-shrink-0">
         <h1 className="text-xl font-bold text-primary">Admin Panel</h1>
         <p className="text-sm text-muted-foreground mt-1">
           Prime Estate Calculator
         </p>
       </div>
       
-      <nav className="p-4 space-y-2 flex-1">
+      <nav className="p-4 space-y-2 flex-1 overflow-y-auto">
         {navItems.map((item) => {
           const Icon = item.icon;
           return (
@@ -109,7 +109,7 @@ const AdminLayout = () => {
         })}
       </nav>
 
-      <div className="p-4">
+      <div className="p-4 flex-shrink-0">
         <Card>
           <CardContent className="p-4">
             <div className="text-sm text-muted-foreground mb-2">
@@ -134,18 +134,19 @@ const AdminLayout = () => {
   );
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="flex">
-        {/* Desktop Sidebar */}
+    <div className="h-screen bg-background overflow-hidden">
+      <div className="flex h-full">
+        {/* Desktop Sidebar - Fixed */}
         {!isMobile && (
-          <div className="w-64 min-h-screen">
+          <div className="w-64 flex-shrink-0">
             <SidebarContent />
           </div>
         )}
 
-        {/* Main Content */}
-        <div className="flex-1 flex flex-col min-h-screen">
-          <header className="bg-card border-b px-4 py-4 lg:px-6">
+        {/* Main Content Area */}
+        <div className="flex-1 flex flex-col h-full overflow-hidden">
+          {/* Fixed Header */}
+          <header className="bg-card border-b px-4 py-4 lg:px-6 flex-shrink-0">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 {/* Mobile Menu Button */}
@@ -171,7 +172,8 @@ const AdminLayout = () => {
             </div>
           </header>
           
-          <main className="flex-1 p-4 lg:p-6 overflow-auto">
+          {/* Scrollable Content */}
+          <main className="flex-1 overflow-y-auto p-4 lg:p-6">
             <Outlet />
           </main>
         </div>

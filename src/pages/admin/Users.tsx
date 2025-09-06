@@ -144,56 +144,58 @@ const Users = () => {
             All Users ({users.length})
           </CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-0">
           {users.length === 0 ? (
-            <div className="text-center py-8 text-muted-foreground">
+            <div className="text-center py-8 text-muted-foreground p-6">
               No users found
             </div>
           ) : (
-            <div className="overflow-x-auto">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Email</TableHead>
-                    <TableHead>Role</TableHead>
-                    <TableHead>Created At</TableHead>
-                    <TableHead>Last Updated</TableHead>
-                    <TableHead>Status</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {users.map((user) => (
-                    <TableRow key={user.id}>
-                      <TableCell>
-                        <div className="font-medium">
-                          {user.email || 'No email'}
-                        </div>
-                        <div className="text-xs text-muted-foreground">
-                          ID: {user.id.slice(0, 8)}...
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <Badge 
-                          variant={user.role === 'admin' ? 'default' : 'secondary'}
-                        >
-                          {user.role}
-                        </Badge>
-                      </TableCell>
-                      <TableCell className="text-sm">
-                        {format(new Date(user.created_at), 'MMM dd, yyyy HH:mm')}
-                      </TableCell>
-                      <TableCell className="text-sm">
-                        {format(new Date(user.updated_at), 'MMM dd, yyyy HH:mm')}
-                      </TableCell>
-                      <TableCell>
-                        <Badge variant="outline" className="text-green-600">
-                          Active
-                        </Badge>
-                      </TableCell>
+            <div className="w-full overflow-hidden">
+              <div className="overflow-x-auto max-w-full">
+                <Table className="min-w-full">
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="min-w-[200px]">Email</TableHead>
+                      <TableHead className="min-w-[80px]">Role</TableHead>
+                      <TableHead className="min-w-[150px]">Created At</TableHead>
+                      <TableHead className="min-w-[150px]">Last Updated</TableHead>
+                      <TableHead className="min-w-[80px]">Status</TableHead>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+                  </TableHeader>
+                  <TableBody>
+                    {users.map((user) => (
+                      <TableRow key={user.id}>
+                        <TableCell>
+                          <div className="font-medium">
+                            {user.email || 'No email'}
+                          </div>
+                          <div className="text-xs text-muted-foreground">
+                            ID: {user.id.slice(0, 8)}...
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <Badge 
+                            variant={user.role === 'admin' ? 'default' : 'secondary'}
+                          >
+                            {user.role}
+                          </Badge>
+                        </TableCell>
+                        <TableCell className="text-sm">
+                          {format(new Date(user.created_at), 'MMM dd, yyyy HH:mm')}
+                        </TableCell>
+                        <TableCell className="text-sm">
+                          {format(new Date(user.updated_at), 'MMM dd, yyyy HH:mm')}
+                        </TableCell>
+                        <TableCell>
+                          <Badge variant="outline" className="text-green-600">
+                            Active
+                          </Badge>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
             </div>
           )}
         </CardContent>

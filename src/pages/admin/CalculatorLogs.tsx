@@ -88,61 +88,63 @@ const CalculatorLogs = () => {
         <CardHeader>
           <CardTitle>Recent Calculations ({logs.length})</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-0">
           {logs.length === 0 ? (
-            <div className="text-center py-8 text-muted-foreground">
+            <div className="text-center py-8 text-muted-foreground p-6">
               No calculations found
             </div>
           ) : (
-            <div className="overflow-x-auto">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Date</TableHead>
-                    <TableHead>User</TableHead>
-                    <TableHead>Property Price</TableHead>
-                    <TableHead>Total Cost</TableHead>
-                    <TableHead>Property Type</TableHead>
-                    <TableHead>Region</TableHead>
-                    <TableHead>Tax Rate</TableHead>
-                    <TableHead>Mortgage</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {logs.map((log) => (
-                    <TableRow key={log.id}>
-                      <TableCell className="text-sm">
-                        {format(new Date(log.created_at), 'MMM dd, yyyy HH:mm')}
-                      </TableCell>
-                      <TableCell>
-                        {log.profiles?.email ? (
-                          <div className="text-sm">{log.profiles.email}</div>
-                        ) : (
-                          <Badge variant="secondary">Anonymous</Badge>
-                        )}
-                      </TableCell>
-                      <TableCell className="font-medium">
-                        {formatCurrency(log.property_price)}
-                      </TableCell>
-                      <TableCell className="font-medium text-primary">
-                        {formatCurrency(log.total_cost)}
-                      </TableCell>
-                      <TableCell>
-                        <Badge variant="outline">{log.property_type}</Badge>
-                      </TableCell>
-                      <TableCell>{log.region}</TableCell>
-                      <TableCell>{(log.tax_rate * 100).toFixed(1)}%</TableCell>
-                      <TableCell>
-                        {log.include_mortgage ? (
-                          <Badge variant="default">Yes</Badge>
-                        ) : (
-                          <Badge variant="secondary">No</Badge>
-                        )}
-                      </TableCell>
+            <div className="w-full overflow-hidden">
+              <div className="overflow-x-auto max-w-full">
+                <Table className="min-w-full">
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="min-w-[120px]">Date</TableHead>
+                      <TableHead className="min-w-[150px]">User</TableHead>
+                      <TableHead className="min-w-[120px]">Property Price</TableHead>
+                      <TableHead className="min-w-[120px]">Total Cost</TableHead>
+                      <TableHead className="min-w-[120px]">Property Type</TableHead>
+                      <TableHead className="min-w-[100px]">Region</TableHead>
+                      <TableHead className="min-w-[80px]">Tax Rate</TableHead>
+                      <TableHead className="min-w-[80px]">Mortgage</TableHead>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+                  </TableHeader>
+                  <TableBody>
+                    {logs.map((log) => (
+                      <TableRow key={log.id}>
+                        <TableCell className="text-sm">
+                          {format(new Date(log.created_at), 'MMM dd, yyyy HH:mm')}
+                        </TableCell>
+                        <TableCell>
+                          {log.profiles?.email ? (
+                            <div className="text-sm">{log.profiles.email}</div>
+                          ) : (
+                            <Badge variant="secondary">Anonymous</Badge>
+                          )}
+                        </TableCell>
+                        <TableCell className="font-medium">
+                          {formatCurrency(log.property_price)}
+                        </TableCell>
+                        <TableCell className="font-medium text-primary">
+                          {formatCurrency(log.total_cost)}
+                        </TableCell>
+                        <TableCell>
+                          <Badge variant="outline">{log.property_type}</Badge>
+                        </TableCell>
+                        <TableCell>{log.region}</TableCell>
+                        <TableCell>{(log.tax_rate * 100).toFixed(1)}%</TableCell>
+                        <TableCell>
+                          {log.include_mortgage ? (
+                            <Badge variant="default">Yes</Badge>
+                          ) : (
+                            <Badge variant="secondary">No</Badge>
+                          )}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
             </div>
           )}
         </CardContent>
