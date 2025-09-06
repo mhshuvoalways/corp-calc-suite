@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { format } from 'date-fns';
-import { Download, Users as UsersIcon } from 'lucide-react';
+import { Download, Users as UsersIcon, ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface User {
   id: string;
@@ -20,47 +20,74 @@ const Users = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [exporting, setExporting] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalCount, setTotalCount] = useState(0);
   const { toast } = useToast();
+  const pageSize = 20;
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const { data, error } = await supabase
-          .from('profiles')
-          .select('*')
-          .order('created_at', { ascending: false });
+    fetchUsers();
+  }, [currentPage]);
 
-        if (error) {
-          console.error('Error fetching users:', error);
-          toast({
-            title: "Error",
-            description: "Failed to fetch users. Please try again.",
-            variant: "destructive",
-          });
-        } else {
-          setUsers(data || []);
-        }
-      } catch (error) {
+  const fetchUsers = async () => {
+    setLoading(true);
+    try {
+      const from = (currentPage - 1) * pageSize;
+      const to = from + pageSize - 1;
+
+      // Get paginated data
+      const { data, error, count } = await supabase
+        .from('profiles')
+        .select('*', { count: 'exact' })
+        .order('created_at', { ascending: false })
+        .range(from, to);
+
+      if (error) {
         console.error('Error fetching users:', error);
         toast({
           title: "Error",
           description: "Failed to fetch users. Please try again.",
           variant: "destructive",
         });
-      } finally {
-        setLoading(false);
+      } else {
+        setUsers(data || []);
+        setTotalCount(count || 0);
       }
-    };
+    } catch (error) {
+      console.error('Error fetching users:', error);
+      toast({
+        title: "Error",
+        description: "Failed to fetch users. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    fetchUsers();
-  }, [toast]);
+  const fetchAllUsersForExport = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      return data || [];
+    } catch (error) {
+      console.error('Error fetching all users:', error);
+      throw error;
+    }
+  };
 
   const exportToCSV = async () => {
     setExporting(true);
     try {
+      const allUsers = await fetchAllUsersForExport();
+      
       // Prepare CSV data
       const csvHeaders = ['ID', 'Email', 'Role', 'Created At', 'Updated At'];
-      const csvData = users.map(user => [
+      const csvData = allUsers.map(user => [
         user.id,
         user.email || 'N/A',
         user.role,
@@ -73,8 +100,8 @@ const Users = () => {
         csvHeaders.join(','),
         ...csvData.map(row => 
           row.map(field => 
-            typeof field === 'string' && field.includes(',') 
-              ? `"${field}"` 
+            typeof field === 'string' && (field.includes(',') || field.includes('"'))
+              ? `"${field.replace(/"/g, '""')}"`
               : field
           ).join(',')
         )
@@ -93,7 +120,7 @@ const Users = () => {
 
       toast({
         title: "Export Successful",
-        description: `Exported ${users.length} users to CSV file.`,
+        description: `Exported ${allUsers.length} users to CSV file.`,
       });
     } catch (error) {
       console.error('Error exporting CSV:', error);
@@ -104,6 +131,14 @@ const Users = () => {
       });
     } finally {
       setExporting(false);
+    }
+  };
+
+  const totalPages = Math.ceil(totalCount / pageSize);
+
+  const goToPage = (page: number) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
     }
   };
 
@@ -141,11 +176,15 @@ const Users = () => {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <UsersIcon className="h-5 w-5" />
-            All Users ({users.length})
+            All Users ({totalCount})
           </CardTitle>
         </CardHeader>
         <CardContent className="p-0">
-          {users.length === 0 ? (
+          {loading ? (
+            <div className="text-center py-8 text-muted-foreground p-6">
+              Loading users...
+            </div>
+          ) : users.length === 0 ? (
             <div className="text-center py-8 text-muted-foreground p-6">
               No users found
             </div>
@@ -199,6 +238,62 @@ const Users = () => {
             </div>
           )}
         </CardContent>
+
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <div className="flex items-center justify-center space-x-2 p-4 border-t">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => goToPage(currentPage - 1)}
+              disabled={currentPage === 1}
+            >
+              <ChevronLeft className="h-4 w-4" />
+              Previous
+            </Button>
+            
+            <div className="flex items-center space-x-1">
+              {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                let pageNum;
+                if (totalPages <= 5) {
+                  pageNum = i + 1;
+                } else if (currentPage <= 3) {
+                  pageNum = i + 1;
+                } else if (currentPage >= totalPages - 2) {
+                  pageNum = totalPages - 4 + i;
+                } else {
+                  pageNum = currentPage - 2 + i;
+                }
+                
+                return (
+                  <Button
+                    key={pageNum}
+                    variant={currentPage === pageNum ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => goToPage(pageNum)}
+                    className="w-8 h-8 p-0"
+                  >
+                    {pageNum}
+                  </Button>
+                );
+              })}
+            </div>
+
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => goToPage(currentPage + 1)}
+              disabled={currentPage === totalPages}
+            >
+              Next
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+            
+            <div className="text-sm text-muted-foreground ml-4">
+              Page {currentPage} of {totalPages} ({totalCount} total)
+            </div>
+          </div>
+        )}
       </Card>
     </div>
   );
